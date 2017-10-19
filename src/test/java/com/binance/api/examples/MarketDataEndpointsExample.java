@@ -20,7 +20,7 @@ import java.util.List;
 public class MarketDataEndpointsExample {
 
   public static void main(String[] args) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET");
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
     BinanceApiRestClient client = factory.newRestClient();
 
     // Getting depth of a symbol
@@ -46,11 +46,6 @@ public class MarketDataEndpointsExample {
     // Getting all book tickers
     List<BookTicker> allBookTickers = client.getBookTickers();
     System.out.println(allBookTickers);
-
-    // Get account balances
-    Account account = client.getAccount(6000000L, System.currentTimeMillis());
-    System.out.println(account.getBalances());
-    System.out.println(account.getAssetBalance("ENG"));
 
     // Exception handling
     try {

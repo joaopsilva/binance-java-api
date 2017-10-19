@@ -1,9 +1,11 @@
 package com.binance.api.client;
 
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
@@ -172,6 +174,32 @@ public interface BinanceApiAsyncRestClient {
    * Get current account information using default parameters (async).
    */
   void getAccount(BinanceApiCallback<Account> callback);
+
+  /**
+   * Submit a withdraw request.
+   *
+   * Enable Withdrawals option has to be active in the API settings.
+   *
+   * @param asset asset symbol to withdraw
+   * @param address address to withdraw to
+   * @param amount amount to withdraw
+   * @param name description/alias of the address
+   */
+  void withdraw(String asset, String address, String amount, String name, BinanceApiCallback<Void> callback);
+
+  /**
+   * Fetch account deposit history.
+   *
+   * @param callback the callback that handles the response and returns the deposit history
+   */
+  void getDepositHistory(String asset, BinanceApiCallback<DepositHistory> callback);
+
+  /**
+   * Fetch account withdraw history.
+   *
+   * @param callback the callback that handles the response and returns the withdraw history
+   */
+  void getWithdrawHistory(String asset, BinanceApiCallback<WithdrawHistory> callback);
 
   // User stream endpoints
 

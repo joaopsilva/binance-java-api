@@ -14,15 +14,16 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
+/**
+ * Generates a Binance API implementation based on @see {@link BinanceApiService}.
+ */
 public class BinanceApiServiceGenerator {
-
-    public static final String API_BASE_URL = BinanceApiConstants.API_BASE_URL;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder =
         new Retrofit.Builder()
-            .baseUrl(API_BASE_URL)
+            .baseUrl(BinanceApiConstants.API_BASE_URL)
             .addConverterFactory(JacksonConverterFactory.create());
 
     private static Retrofit retrofit = builder.build();

@@ -1,9 +1,11 @@
 package com.binance.api.client;
 
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
@@ -15,6 +17,8 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
+import retrofit2.Call;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -161,6 +165,32 @@ public interface BinanceApiRestClient {
    * Get current account information using default parameters.
    */
   Account getAccount();
+
+  /**
+   * Submit a withdraw request.
+   *
+   * Enable Withdrawals option has to be active in the API settings.
+   *
+   * @param asset asset symbol to withdraw
+   * @param address address to withdraw to
+   * @param amount amount to withdraw
+   * @param name description/alias of the address
+   */
+  void withdraw(String asset, String address, String amount, String name);
+
+  /**
+   * Fetch account deposit history.
+   *
+   * @return deposit history, containing a list of deposits
+   */
+  DepositHistory getDepositHistory(String asset);
+
+  /**
+   * Fetch account withdraw history.
+   *
+   * @return withdraw history, containing a list of withdrawals
+   */
+  WithdrawHistory getWithdrawHistory(String asset);
 
   // User stream endpoints
 

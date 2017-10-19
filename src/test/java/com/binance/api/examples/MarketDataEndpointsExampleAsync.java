@@ -19,7 +19,7 @@ import java.util.List;
 public class MarketDataEndpointsExampleAsync {
 
   public static void main(String[] args) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "SECRET");
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
     BinanceApiAsyncRestClient client = factory.newAsyncRestClient();
 
     // Getting depth of a symbol (async)
@@ -46,9 +46,6 @@ public class MarketDataEndpointsExampleAsync {
 
     // Book tickers (async)
     client.getBookTickers(response -> System.out.println(response));
-
-    // Get account balances (async)
-    client.getAccount((Account response) -> System.out.println(response.getAssetBalance("ETH")));
 
     // Exception handling
     try {
