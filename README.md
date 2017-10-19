@@ -257,6 +257,60 @@ client.onDepthEvent("ethbtc", (DepthEvent response) -> {
 ```
 </details>
 
+#### Get 1m candlesticks in real-time for ETH/BTC
+```java
+client.onCandlestickEvent("ethbtc", CandlestickInterval.ONE_MINUTE, response -> System.out.println(response));
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+CandlestickEvent[eventType=kline,eventTime=1508417055113,symbol=ETHBTC,openTime=1508417040000,open=0.05376300,high=0.05376300,low=0.05372900,close=0.05372900,volume=0.49400000,closeTime=1508417099999,intervalId=1m,firstTradeId=2199019,lastTradeId=2199020,quoteAssetVolume=0.02654552,numberOfTrades=2,takerBuyBaseAssetVolume=0.00000000,takerBuyQuoteAssetVolume=0.00000000,isBarFinal=false]
+CandlestickEvent[eventType=kline,eventTime=1508417055145,symbol=ETHBTC,openTime=1508417040000,open=0.05376300,high=0.05376300,low=0.05371700,close=0.05371700,volume=0.62900000,closeTime=1508417099999,intervalId=1m,firstTradeId=2199019,lastTradeId=2199021,quoteAssetVolume=0.03379731,numberOfTrades=3,takerBuyBaseAssetVolume=0.00000000,takerBuyQuoteAssetVolume=0.00000000,isBarFinal=false]
+CandlestickEvent[eventType=kline,eventTime=1508417096085,symbol=ETHBTC,openTime=1508417040000,open=0.05376300,high=0.05376300,low=0.05370900,close=0.05370900,volume=0.68000000,closeTime=1508417099999,intervalId=1m,firstTradeId=2199019,lastTradeId=2199022,quoteAssetVolume=0.03653646,numberOfTrades=4,takerBuyBaseAssetVolume=0.00000000,takerBuyQuoteAssetVolume=0.00000000,isBarFinal=false]
+...
+```
+</details>
+
+#### Keep a local depth cache for a symbol
+
+Please see [DepthCacheExample.java](https://github.com/joaopsilva/binance-java-api/blob/master/src/test/java/com/binance/api/examples/DepthCacheExample.java) for an implementation which uses the binance-java-api for maintaining a local depth cache for a symbol.
+
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+ASKS:
+0.05690700 / 6.15100000
+0.05447800 / 0.09500000
+0.05447700 / 28.22000000
+0.05439000 / 0.54500000
+0.05438400 / 1.10300000
+0.05436600 / 0.06100000
+0.05434000 / 0.05500000
+0.05432800 / 3.45100000
+0.05422700 / 1.11100000
+0.05410600 / 5.85900000
+0.05409300 / 4.50000000
+BIDS:
+0.05390000 / 2.26000000
+0.05389000 / 15.00000000
+0.05385600 / 1.95000000
+0.05367900 / 0.10000000
+0.05366700 / 2.27600000
+0.05360000 / 10.96100000
+0.05348500 / 14.04000000
+0.05345000 / 0.56100000
+0.05336200 / 21.10000000
+0.05336100 / 21.15000000
+0.05306600 / 0.21100000
+0.05116300 / 10.95000000
+BEST ASK: 0.05409300 / 4.50000000
+BEST BID: 0.05390000 / 2.26000000
+...
+```
+</details>
+
 #### Listen for changes in the account
 
 ```java
