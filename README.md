@@ -1,6 +1,6 @@
 # Java Binance API
 
-binance-java-api is a Java library for interacting with the [Binance API](https://www.binance.com/restapipub.html), providing complete API coverage, and supporting synchronous and asynchronous requests, as well as event streaming using WebSockets.
+binance-java-api is a lightweight Java library for interacting with the [Binance API](https://www.binance.com/restapipub.html), providing complete API coverage, and supporting synchronous and asynchronous requests, as well as event streaming using WebSockets.
 
 ## Features
 * Support for synchronous and asynchronous REST requests to all [General](https://www.binance.com/restapipub.html#user-content-general-endpoints), [Market Data](https://www.binance.com/restapipub.html#user-content-market-data-endpoints), [Account](https://www.binance.com/restapipub.html#user-content-account-endpoints) endpoints, and [User](https://www.binance.com/restapipub.html#user-content-user-data-stream-endpoints) stream endpoints.
@@ -201,6 +201,41 @@ System.out.println(newOrderResponse.getTransactTime());
 ```java
 client.cancelOrder(new CancelOrderRequest("LINKETH", 123015L));
 ```
+
+#### Withdraw
+
+In order to be able to withdraw programatically, please enable the `Enable Withdrawals` option in the API settings.
+
+```java
+client.withdraw("ETH", "0x123", "0.1", null);
+```
+
+#### Fetch withdraw history
+
+```java
+WithdrawHistory withdrawHistory = client.getWithdrawHistory("ETH");
+System.out.println(withdrawHistory);
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+WithdrawHistory[withdrawList=[Withdraw[amount=0.1,address=0x123,asset=ETH,applyTime=2017-10-13 20:59:38,successTime=2017-10-13 21:20:09,txId=0x456,id=789]],success=true]
+```
+</details>
+
+#### Fetch deposit history
+```java
+DepositHistory depositHistory = client.getDepositHistory("ETH");
+System.out.println(depositHistory);
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+DepositHistory[depositList=[Deposit[amount=0.100000000000000000,asset=ETH,insertTime=2017-10-18 13:03:39], Deposit[amount=1.000000000000000000,asset=NEO,insertTime=2017-10-13 20:24:04]],success=true]
+```
+</details>
 
 ### User stream endpoints
 
