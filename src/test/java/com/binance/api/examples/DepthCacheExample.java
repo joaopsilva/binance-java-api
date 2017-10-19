@@ -73,8 +73,6 @@ public class DepthCacheExample {
     });
   }
 
-
-
   /**
    * Updates an order book (bids or asks) with a delta received from the server.
    *
@@ -113,6 +111,13 @@ public class DepthCacheExample {
    */
   private Map.Entry<BigDecimal, BigDecimal> getBestBid() {
     return getBids().firstEntry();
+  }
+
+  /**
+   * @return a depth cache, containing two keys (ASKs and BIDs), and for each, an ordered list of book entries.
+   */
+  public Map<String, NavigableMap<BigDecimal, BigDecimal>> getDepthCache() {
+    return depthCache;
   }
 
   /**

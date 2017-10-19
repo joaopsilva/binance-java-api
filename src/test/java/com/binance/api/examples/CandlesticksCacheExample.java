@@ -72,6 +72,14 @@ public class CandlesticksCacheExample {
     });
   }
 
+  /**
+   * @return a klines/candlestick cache, containing the open/start time of the candlestick as the key,
+   * and the candlestick data as the value.
+   */
+  public Map<Long, Candlestick> getCandlesticksCache() {
+    return candlesticksCache;
+  }
+
   public static void main(String[] args) {
     new CandlesticksCacheExample("ETHBTC", CandlestickInterval.ONE_MINUTE);
   }

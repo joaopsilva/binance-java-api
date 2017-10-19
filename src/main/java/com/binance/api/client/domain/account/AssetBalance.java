@@ -1,6 +1,5 @@
 package com.binance.api.client.domain.account;
 
-import com.binance.api.client.domain.account.Account;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
