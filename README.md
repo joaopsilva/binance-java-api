@@ -274,7 +274,7 @@ CandlestickEvent[eventType=kline,eventTime=1508417096085,symbol=ETHBTC,openTime=
 
 #### Keep a local depth cache for a symbol
 
-Please see [DepthCacheExample.java](https://github.com/joaopsilva/binance-java-api/blob/master/src/test/java/com/binance/api/examples/DepthCacheExample.java) for an implementation which uses the binance-java-api for maintaining a local depth cache for a symbol.
+Please see [DepthCacheExample.java](https://github.com/joaopsilva/binance-java-api/blob/master/src/test/java/com/binance/api/examples/DepthCacheExample.java) for an implementation which uses the binance-java-api for maintaining a local depth cache for a symbol. In the same folder, you can also find how to do caching of account balances, aggregated trades, and klines/candlesticks.
 
 <details>
  <summary>View Response</summary>
@@ -370,7 +370,7 @@ client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001"), (NewOrde
 
 ### Exception handling
 
-Every API method can potentially throw a checked `BinanceApiException` which wraps the error message returned from the Binance API, or an exception, in case the request never properly reached the server.
+Every API method can potentially throw an unchecked `BinanceApiException` which wraps the error message returned from the Binance API, or an exception, in case the request never properly reached the server.
 
 ```java
 try {
