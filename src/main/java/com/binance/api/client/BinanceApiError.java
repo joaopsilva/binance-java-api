@@ -1,12 +1,21 @@
 package com.binance.api.client;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Binance API error object.
  */
 public class BinanceApiError {
 
+  /**
+   * Error code.
+   */
   private int code;
 
+  /**
+   * Error message.
+   */
   private String msg;
 
   public int getCode() {
@@ -27,10 +36,9 @@ public class BinanceApiError {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("BinanceApiError{");
-    sb.append("code=").append(code);
-    sb.append(", msg='").append(msg).append('\'');
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        .append("code", code)
+        .append("msg", msg)
+        .toString();
   }
 }

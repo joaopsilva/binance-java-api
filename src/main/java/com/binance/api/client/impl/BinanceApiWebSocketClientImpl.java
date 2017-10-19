@@ -4,8 +4,10 @@ import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.event.AggTradeEvent;
+import com.binance.api.client.domain.event.CandlestickEvent;
 import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
+import com.binance.api.client.domain.market.CandlestickInterval;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -23,14 +25,20 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
     this.client = new OkHttpClient();
   }
 
-  public void onAggTradeEvent(String symbol, BinanceApiCallback<AggTradeEvent> callback) {
-    final String channel = String.format("%s@aggTrade", symbol);
-    createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, AggTradeEvent.class));
-  }
-
   public void onDepthEvent(String symbol, BinanceApiCallback<DepthEvent> callback) {
     final String channel = String.format("%s@depth", symbol);
     createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, DepthEvent.class));
+  }
+
+  @Override
+  public void onCandlestickEvent(String symbol, CandlestickInterval interval, BinanceApiCallback<CandlestickEvent> callback) {
+    final String channel = String.format("%s@kline_%s", symbol, interval.getIntervalId());
+    createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, CandlestickEvent.class));
+  }
+
+  public void onAggTradeEvent(String symbol, BinanceApiCallback<AggTradeEvent> callback) {
+    final String channel = String.format("%s@aggTrade", symbol);
+    createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, AggTradeEvent.class));
   }
 
   public void onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback) {

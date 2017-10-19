@@ -1,18 +1,20 @@
-package com.binance.api.client.domain.market;
+package com.binance.api.client.domain.event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Kline/Candlestick bars for a symbol. Klines are uniquely identified by their open time.
+ * An interval candlestick for a symbol providing informations on price that can be used to produce candlestick charts.
  */
-@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-@JsonPropertyOrder()
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Candlestick {
+@JsonDeserialize(using = CandlestickEventDeserializer.class)
+public class CandlestickEvent {
+
+  private String eventType;
+
+  private long eventTime;
+
+  private String symbol;
 
   private Long openTime;
 
@@ -28,6 +30,10 @@ public class Candlestick {
 
   private Long closeTime;
 
+  private String intervalId;
+  private Long firstTradeId;
+  private Long lastTradeId;
+
   private String quoteAssetVolume;
 
   private Long numberOfTrades;
@@ -35,6 +41,32 @@ public class Candlestick {
   private String takerBuyBaseAssetVolume;
 
   private String takerBuyQuoteAssetVolume;
+
+  private Boolean isBarFinal;
+
+  public String getEventType() {
+    return eventType;
+  }
+
+  public void setEventType(String eventType) {
+    this.eventType = eventType;
+  }
+
+  public long getEventTime() {
+    return eventTime;
+  }
+
+  public void setEventTime(long eventTime) {
+    this.eventTime = eventTime;
+  }
+
+  public String getSymbol() {
+    return symbol;
+  }
+
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
 
   public Long getOpenTime() {
     return openTime;
@@ -92,6 +124,30 @@ public class Candlestick {
     this.closeTime = closeTime;
   }
 
+  public String getIntervalId() {
+    return intervalId;
+  }
+
+  public void setIntervalId(String intervalId) {
+    this.intervalId = intervalId;
+  }
+
+  public Long getFirstTradeId() {
+    return firstTradeId;
+  }
+
+  public void setFirstTradeId(Long firstTradeId) {
+    this.firstTradeId = firstTradeId;
+  }
+
+  public Long getLastTradeId() {
+    return lastTradeId;
+  }
+
+  public void setLastTradeId(Long lastTradeId) {
+    this.lastTradeId = lastTradeId;
+  }
+
   public String getQuoteAssetVolume() {
     return quoteAssetVolume;
   }
@@ -124,9 +180,20 @@ public class Candlestick {
     this.takerBuyQuoteAssetVolume = takerBuyQuoteAssetVolume;
   }
 
+  public Boolean getBarFinal() {
+    return isBarFinal;
+  }
+
+  public void setBarFinal(Boolean barFinal) {
+    isBarFinal = barFinal;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        .append("eventType", eventType)
+        .append("eventTime", eventTime)
+        .append("symbol", symbol)
         .append("openTime", openTime)
         .append("open", open)
         .append("high", high)
@@ -134,10 +201,14 @@ public class Candlestick {
         .append("close", close)
         .append("volume", volume)
         .append("closeTime", closeTime)
+        .append("intervalId", intervalId)
+        .append("firstTradeId", firstTradeId)
+        .append("lastTradeId", lastTradeId)
         .append("quoteAssetVolume", quoteAssetVolume)
         .append("numberOfTrades", numberOfTrades)
         .append("takerBuyBaseAssetVolume", takerBuyBaseAssetVolume)
         .append("takerBuyQuoteAssetVolume", takerBuyQuoteAssetVolume)
+        .append("isBarFinal", isBarFinal)
         .toString();
   }
 }

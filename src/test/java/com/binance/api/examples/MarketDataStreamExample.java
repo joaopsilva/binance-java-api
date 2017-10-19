@@ -2,6 +2,7 @@ package com.binance.api.examples;
 
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.domain.market.CandlestickInterval;
 
 import java.io.IOException;
 
@@ -20,5 +21,8 @@ public class MarketDataStreamExample {
 
     // Listen for changes in the order book in ETH/BTC
     client.onDepthEvent("ethbtc", response -> System.out.println(response));
+
+    // Obtain 1m candlesticks in real-time for ETH/BTC
+    client.onCandlestickEvent("ethbtc", CandlestickInterval.ONE_MINUTE, response -> System.out.println(response));
   }
 }
