@@ -24,11 +24,6 @@
       <version>${com.squareup.retrofit2.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.squareup.retrofit2</groupId>
-      <artifactId>adapter-rxjava2</artifactId>
-      <version>${com.squareup.retrofit2.version}</version>
-    </dependency>
-    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.10</version>

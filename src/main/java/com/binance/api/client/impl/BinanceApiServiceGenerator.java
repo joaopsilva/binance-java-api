@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class BinanceApiServiceGenerator {
     private static Retrofit.Builder builder =
         new Retrofit.Builder()
             .baseUrl(API_BASE_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(JacksonConverterFactory.create());
 
     private static Retrofit retrofit = builder.build();
