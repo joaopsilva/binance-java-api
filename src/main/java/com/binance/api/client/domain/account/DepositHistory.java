@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DepositHistory {
 
-  @JsonProperty("withdrawList")
+  @JsonProperty("depositList")
   private List<Deposit> depositList;
 
   private boolean success;
