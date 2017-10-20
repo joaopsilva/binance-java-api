@@ -5,11 +5,10 @@ import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.Deposit;
 import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Withdraw;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ServerTime;
@@ -104,6 +103,11 @@ public interface BinanceApiService {
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
   @GET("/api/v3/account")
   Call<Account> getAccount(@Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+  @GET("/api/v3/myTrades")
+  Call<List<Trade>> getMyTrades(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId,
+                                @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
   @POST("/wapi/v1/withdraw.html")

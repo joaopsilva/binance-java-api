@@ -5,6 +5,7 @@ import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -17,8 +18,6 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
-import retrofit2.Call;
-import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -165,6 +164,33 @@ public interface BinanceApiRestClient {
    * Get current account information using default parameters.
    */
   Account getAccount();
+
+  /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @param limit default 500; max 500
+   * @param fromId TradeId to fetch from. Default gets most recent trades.
+   * @return a list of trades
+   */
+  List<Trade> getMyTrades(String symbol, Integer limit, Long fromId, Long recvWindow, Long timestamp);
+
+  /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @param limit default 500; max 500
+   * @return a list of trades
+   */
+  List<Trade> getMyTrades(String symbol, Integer limit);
+
+  /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @return a list of trades
+   */
+  List<Trade> getMyTrades(String symbol);
 
   /**
    * Submit a withdraw request.

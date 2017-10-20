@@ -7,6 +7,7 @@ import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -139,7 +140,22 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 
   @Override
   public Account getAccount() {
-    return executeSync(binanceApiService.getAccount(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+    return getAccount(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis());
+  }
+
+  @Override
+  public List<Trade> getMyTrades(String symbol, Integer limit, Long fromId, Long recvWindow, Long timestamp) {
+    return executeSync(binanceApiService.getMyTrades(symbol, limit, fromId, recvWindow, timestamp));
+  }
+
+  @Override
+  public List<Trade> getMyTrades(String symbol, Integer limit) {
+    return getMyTrades(symbol, limit, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis());
+  }
+
+  @Override
+  public List<Trade> getMyTrades(String symbol) {
+    return getMyTrades(symbol, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis());
   }
 
   @Override
