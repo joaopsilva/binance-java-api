@@ -1,6 +1,7 @@
 package com.binance.api.client;
 
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositAddress;
 import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
@@ -217,6 +218,13 @@ public interface BinanceApiRestClient {
    * @return withdraw history, containing a list of withdrawals
    */
   WithdrawHistory getWithdrawHistory(String asset);
+
+  /**
+   * Fetch deposit address.
+   *
+   * @return deposit address for a given asset.
+   */
+  DepositAddress getDepositAddress(String asset);
 
   // User stream endpoints
 

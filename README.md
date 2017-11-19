@@ -250,6 +250,19 @@ DepositHistory[depositList=[Deposit[amount=0.100000000000000000,asset=ETH,insert
 ```
 </details>
 
+#### Get deposit address
+```java
+DepositAddress depositAddress = client.getDepositAddress("ETH");
+System.out.println(depositAddress);
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+DepositAddress[address=0x99...,success=true,addressTag=,asset=ETH]
+```
+</details>
+
 ### User stream endpoints
 
 #### Start user data stream, keepalive, and close data stream

@@ -3,6 +3,7 @@ package com.binance.api.client.impl;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositAddress;
 import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
@@ -171,6 +172,11 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   @Override
   public WithdrawHistory getWithdrawHistory(String asset) {
     return executeSync(binanceApiService.getWithdrawHistory(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+  }
+
+  @Override
+  public DepositAddress getDepositAddress(String asset) {
+    return executeSync(binanceApiService.getDepositAddress(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
   }
 
   // User stream endpoints

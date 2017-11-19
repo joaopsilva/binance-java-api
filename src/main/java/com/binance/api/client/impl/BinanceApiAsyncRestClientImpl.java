@@ -4,6 +4,7 @@ import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositAddress;
 import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
@@ -177,6 +178,12 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   @Override
   public void getWithdrawHistory(String asset, BinanceApiCallback<WithdrawHistory> callback) {
     binanceApiService.getWithdrawHistory(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
+        .enqueue(new BinanceApiCallbackAdapter<>(callback));
+  }
+
+  @Override
+  public void getDepositAddress(String asset, BinanceApiCallback<DepositAddress> callback) {
+    binanceApiService.getDepositAddress(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
         .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 

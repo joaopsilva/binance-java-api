@@ -31,6 +31,9 @@ public class AccountEndpointsExample {
     // Get deposit history
     System.out.println(client.getDepositHistory("ETH"));
 
+    // Get deposit address
+    System.out.println(client.getDepositAddress("ETH"));
+
     // Withdraw
     client.withdraw("ETH", "0x123", "0.1", null);
   }
