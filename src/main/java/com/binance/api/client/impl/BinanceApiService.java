@@ -110,17 +110,17 @@ public interface BinanceApiService {
                                 @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
-  @POST("/wapi/v1/withdraw.html")
+  @POST("/wapi/v3/withdraw.html")
   Call<Void> withdraw(@Query("asset") String asset, @Query("address") String address, @Query("amount") String amount, @Query("name") String name,
                       @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
 
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
-  @POST("/wapi/v1/getDepositHistory.html")
+  @GET("/wapi/v3/depositHistory.html")
   Call<DepositHistory> getDepositHistory(@Query("asset") String asset, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
-  @POST("/wapi/v1/getWithdrawHistory.html")
+  @GET("/wapi/v3/withdrawHistory.html")
   Call<WithdrawHistory> getWithdrawHistory(@Query("asset") String asset, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
 
   // User stream endpoints
