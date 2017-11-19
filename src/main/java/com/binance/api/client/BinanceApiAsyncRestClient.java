@@ -1,10 +1,12 @@
 package com.binance.api.client;
 
 import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositAddress;
 import com.binance.api.client.domain.account.DepositHistory;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -176,6 +178,33 @@ public interface BinanceApiAsyncRestClient {
   void getAccount(BinanceApiCallback<Account> callback);
 
   /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @param limit default 500; max 500
+   * @param fromId TradeId to fetch from. Default gets most recent trades.
+   * @param callback the callback that handles the response with a list of trades
+   */
+  void getMyTrades(String symbol, Integer limit, Long fromId, Long recvWindow, Long timestamp, BinanceApiCallback<List<Trade>> callback);
+
+  /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @param limit default 500; max 500
+   * @param callback the callback that handles the response with a list of trades
+   */
+  void getMyTrades(String symbol, Integer limit, BinanceApiCallback<List<Trade>> callback);
+
+  /**
+   * Get trades for a specific account and symbol.
+   *
+   * @param symbol symbol to get trades from
+   * @param callback the callback that handles the response with a list of trades
+   */
+  void getMyTrades(String symbol, BinanceApiCallback<List<Trade>> callback);
+
+  /**
    * Submit a withdraw request.
    *
    * Enable Withdrawals option has to be active in the API settings.
@@ -200,6 +229,13 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response and returns the withdraw history
    */
   void getWithdrawHistory(String asset, BinanceApiCallback<WithdrawHistory> callback);
+
+  /**
+   * Fetch deposit address.
+   *
+   * @param callback the callback that handles the response and returns the deposit address
+   */
+   void getDepositAddress(String asset, BinanceApiCallback<DepositAddress> callback);
 
   // User stream endpoints
 

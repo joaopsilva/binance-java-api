@@ -16,6 +16,9 @@ public class AccountEndpointsExampleAsync {
     // Get account balances (async)
     client.getAccount((Account response) -> System.out.println(response.getAssetBalance("ETH")));
 
+    // Get list of trades (async)
+    client.getMyTrades("NEOETH", response -> System.out.println(response));
+
     // Get withdraw history (async)
     client.getWithdrawHistory("ETH", response -> System.out.println(response));
 

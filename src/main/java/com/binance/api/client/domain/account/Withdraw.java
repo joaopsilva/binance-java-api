@@ -30,7 +30,7 @@ public class Withdraw {
   private String successTime;
 
   /**
-   * Ethereum transaction id.
+   * Transaction id.
    */
   private String txId;
 
@@ -38,6 +38,11 @@ public class Withdraw {
    * Id.
    */
   private String id;
+
+  /**
+   * (0:Email Sent,1:Cancelled 2:Awaiting Approval 3:Rejected 4:Processing 5:Failure 6:Completed)
+   */
+  private int status;
 
   public String getAmount() {
     return amount;
@@ -95,6 +100,14 @@ public class Withdraw {
     this.id = id;
   }
 
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -105,6 +118,7 @@ public class Withdraw {
         .append("successTime", successTime)
         .append("txId", txId)
         .append("id", id)
+        .append("status", status)
         .toString();
   }
 }

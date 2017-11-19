@@ -6,7 +6,7 @@ binance-java-api is a lightweight Java library for interacting with the [Binance
 
 ## Features
 * Support for synchronous and asynchronous REST requests to all [General](https://www.binance.com/restapipub.html#user-content-general-endpoints), [Market Data](https://www.binance.com/restapipub.html#user-content-market-data-endpoints), [Account](https://www.binance.com/restapipub.html#user-content-account-endpoints) endpoints, and [User](https://www.binance.com/restapipub.html#user-content-user-data-stream-endpoints) stream endpoints.
-* Support for User Data, Trade, and Depth event streaming using [Binance WebSocket API](https://www.binance.com/restapipub.html#wss-endpoint).
+* Support for User Data, Trade, Kline, and Depth event streaming using [Binance WebSocket API](https://www.binance.com/restapipub.html#wss-endpoint).
 
 ## Installation
 1. Install library into your Maven's local repository by running `mvn install`
@@ -147,6 +147,19 @@ AssetBalance[asset=ETH,free=0.10000000,locked=0.00000000]
 ```
 </details>
 
+#### Get list of trades for an account and a symbol
+```java
+List<Trade> myTrades = client.getMyTrades("NEOETH");
+System.out.println(myTrades);
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+[Trade[id=123,price=0.00000100,qty=1000.00000000,commission=0.00172100,commissionAsset=ETH,time=1507927870561,buyer=false,maker=false,bestMatch=true,symbol=<null>,orderId=11289], Trade[id=123,price=0.00001000,qty=3.00000000,commission=0.00000003,commissionAsset=ETH,time=1507927874215,buyer=false,maker=false,bestMatch=true,symbol=<null>,orderId=123]]
+```
+</details>
+
 #### Get account open orders for a symbol
 ```java
 List<Order> openOrders = client.getOpenOrders(new OrderRequest("LINKETH"));
@@ -236,6 +249,19 @@ System.out.println(depositHistory);
  
  ```java
 DepositHistory[depositList=[Deposit[amount=0.100000000000000000,asset=ETH,insertTime=2017-10-18 13:03:39], Deposit[amount=1.000000000000000000,asset=NEO,insertTime=2017-10-13 20:24:04]],success=true]
+```
+</details>
+
+#### Get deposit address
+```java
+DepositAddress depositAddress = client.getDepositAddress("ETH");
+System.out.println(depositAddress);
+```
+<details>
+ <summary>View Response</summary>
+ 
+ ```java
+DepositAddress[address=0x99...,success=true,addressTag=,asset=ETH]
 ```
 </details>
 

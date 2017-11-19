@@ -25,6 +25,16 @@ public class Deposit {
    */
   private String insertTime;
 
+  /**
+   * Transaction id
+   */
+  private String txId;
+
+  /**
+   * (0:pending,1:success)
+   */
+  private int status;
+
   public String getAmount() {
     return amount;
   }
@@ -49,12 +59,30 @@ public class Deposit {
     this.insertTime = insertTime;
   }
 
+  public String getTxId() {
+    return txId;
+  }
+
+  public void setTxId(String txId) {
+    this.txId = txId;
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
         .append("amount", amount)
         .append("asset", asset)
         .append("insertTime", insertTime)
+        .append("txId", txId)
+        .append("status", status)
         .toString();
   }
 }
