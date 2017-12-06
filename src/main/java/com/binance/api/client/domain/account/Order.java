@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 /**
  * Trade order information.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
   /**
