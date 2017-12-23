@@ -5,5 +5,10 @@ package com.binance.api.client.domain;
  */
 public enum OrderType {
   LIMIT,
-  MARKET
+  MARKET,
+  STOP_LOSS,
+  STOP_LOSS_LIMIT,
+  TAKE_PROFIT,
+  TAKE_PROFIT_LIMIT,
+  LIMIT_MAKER
 }

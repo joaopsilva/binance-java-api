@@ -13,6 +13,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
+import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
@@ -40,6 +41,11 @@ public interface BinanceApiAsyncRestClient {
    * Check server time.
    */
   void getServerTime(BinanceApiCallback<ServerTime> callback);
+
+  /**
+   * Current exchange trading rules and symbol information
+   */
+  void getExchangeInfo(BinanceApiCallback<ExchangeInfo> callback);
 
   // Market Data endpoints
 

@@ -12,6 +12,7 @@ import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.event.ListenKey;
+import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
@@ -41,6 +42,9 @@ public interface BinanceApiService {
 
   @GET("/api/v1/time")
   Call<ServerTime> getServerTime();
+
+  @GET("/api/v1/exchangeInfo")
+  Call<ExchangeInfo> getExchangeInfo();
 
   // Market data endpoints
 
