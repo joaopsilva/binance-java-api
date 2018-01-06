@@ -20,7 +20,6 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
-import retrofit2.Call;
 
 import java.util.List;
 

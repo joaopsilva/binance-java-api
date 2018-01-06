@@ -60,10 +60,10 @@ public class AuthenticationInterceptor implements Interceptor {
      *
      * @return request body as a string
      */
+    @SuppressWarnings("unused")
     private static String bodyToString(RequestBody request) {
-        try {
+        try (final Buffer buffer = new Buffer()) {
             final RequestBody copy = request;
-            final Buffer buffer = new Buffer();
             if (copy != null) {
                 copy.writeTo(buffer);
             } else {
