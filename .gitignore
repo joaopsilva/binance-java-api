@@ -94,3 +94,7 @@ hs_err_pid*
 # Maven
 target/
 # End of https://www.gitignore.io/api/java,intellij
+
+# Ignore files and folders starting with dot (except gitignore)
+.*
+!/.gitignore
