@@ -4,7 +4,6 @@ import com.binance.api.client.domain.event.AggTradeEvent;
 import com.binance.api.client.domain.event.CandlestickEvent;
 import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
-import com.binance.api.client.domain.market.Candlestick;
 import com.binance.api.client.domain.market.CandlestickInterval;
 
 /**

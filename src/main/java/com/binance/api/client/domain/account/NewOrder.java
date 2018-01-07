@@ -7,8 +7,6 @@ import com.binance.api.client.domain.TimeInForce;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.math.BigDecimal;
-
 /**
  * A trade order to enter or exit a position.
  */
