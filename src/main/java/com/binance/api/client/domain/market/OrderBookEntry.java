@@ -1,6 +1,8 @@
 package com.binance.api.client.domain.market;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -8,7 +10,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * An order book entry consisting of price and quantity.
  */
 @JsonDeserialize(using = OrderBookEntryDeserializer.class)
+@JsonSerialize(using = OrderBookEntrySerializer.class)
 public class OrderBookEntry {
+
   private String price;
   private String qty;
 
