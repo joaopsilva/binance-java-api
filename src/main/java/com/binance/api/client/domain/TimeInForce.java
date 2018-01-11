@@ -5,10 +5,12 @@ package com.binance.api.client.domain;
  *
  * GTC (Good-Til-Canceled) orders are effective until they are executed or canceled.
  * IOC (Immediate or Cancel) orders fills all or part of an order immediately and cancels the remaining part of the order.
+ * FOK (Fill or Kill) orders fills all in its entirety, otherwise, the entire order will be cancelled.
  *
  * @see <a href="http://www.investopedia.com/terms/t/timeinforce.asp">http://www.investopedia.com/terms/t/timeinforce.asp</a>
  */
 public enum TimeInForce {
   GTC,
-  IOC
+  IOC,
+  FOK
 }
