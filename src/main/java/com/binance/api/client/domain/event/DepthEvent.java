@@ -23,11 +23,14 @@ public class DepthEvent {
   @JsonProperty("s")
   private String symbol;
 
+  @JsonProperty("U")
+  private long firstUpdateId;
+
   /**
    * updateId to sync up with updateid in /api/v1/depth
    */
   @JsonProperty("u")
-  private long updateId;
+  private long finalUpdateId;
 
   /**
    * Bid depth delta.
@@ -65,12 +68,30 @@ public class DepthEvent {
     this.symbol = symbol;
   }
 
-  public long getUpdateId() {
-    return updateId;
+  public long getFirstUpdateId() {
+    return firstUpdateId;
   }
 
+  public void setFirstUpdateId(final long firstUpdateId) {
+    this.firstUpdateId = firstUpdateId;
+  }
+
+  public long getFinalUpdateId() {
+    return finalUpdateId;
+  }
+
+  public void setFinalUpdateId(long finalUpdateId) {
+    this.finalUpdateId = finalUpdateId;
+  }
+
+  @Deprecated // Use getFinalUpdateId
+  public long getUpdateId() {
+    return finalUpdateId;
+  }
+
+  @Deprecated // Use setFinalUpdateId
   public void setUpdateId(long updateId) {
-    this.updateId = updateId;
+    this.finalUpdateId = updateId;
   }
 
   public List<OrderBookEntry> getBids() {
@@ -95,7 +116,8 @@ public class DepthEvent {
         .append("eventType", eventType)
         .append("eventTime", eventTime)
         .append("symbol", symbol)
-        .append("updateId", updateId)
+        .append("firstUpdateId", firstUpdateId)
+        .append("finalUpdateId", finalUpdateId)
         .append("bids", bids)
         .append("asks", asks)
         .toString();
