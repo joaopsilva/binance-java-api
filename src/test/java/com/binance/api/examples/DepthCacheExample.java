@@ -63,9 +63,9 @@ public class DepthCacheExample {
     BinanceApiWebSocketClient client = factory.newWebSocketClient();
 
     client.onDepthEvent(symbol.toLowerCase(), response -> {
-      if (response.getUpdateId() > lastUpdateId) {
+      if (response.getFinalUpdateId() > lastUpdateId) {
         System.out.println(response);
-        lastUpdateId = response.getUpdateId();
+        lastUpdateId = response.getFinalUpdateId();
         updateOrderBook(getAsks(), response.getAsks());
         updateOrderBook(getBids(), response.getBids());
         printDepthCache();
@@ -125,9 +125,9 @@ public class DepthCacheExample {
    */
   private void printDepthCache() {
     System.out.println(depthCache);
-    System.out.println("ASKS:");
+    System.out.println("ASKS:(" + getAsks().size() + ")");
     getAsks().entrySet().forEach(entry -> System.out.println(toDepthCacheEntryString(entry)));
-    System.out.println("BIDS:");
+    System.out.println("BIDS:(" + getBids().size() + ")");
     getBids().entrySet().forEach(entry -> System.out.println(toDepthCacheEntryString(entry)));
     System.out.println("BEST ASK: " + toDepthCacheEntryString(getBestAsk()));
     System.out.println("BEST BID: " + toDepthCacheEntryString(getBestBid()));
