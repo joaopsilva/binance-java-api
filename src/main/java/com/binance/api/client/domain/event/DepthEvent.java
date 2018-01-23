@@ -84,12 +84,18 @@ public class DepthEvent {
     this.finalUpdateId = finalUpdateId;
   }
 
-  @Deprecated // Use getFinalUpdateId
+  /**
+   * @deprecated Use {@link #getFinalUpdateId}
+   */
+  @Deprecated
   public long getUpdateId() {
     return finalUpdateId;
   }
 
-  @Deprecated // Use setFinalUpdateId
+  /**
+   * @deprecated Use {@link #setFinalUpdateId}
+   */
+  @Deprecated
   public void setUpdateId(long updateId) {
     this.finalUpdateId = updateId;
   }
