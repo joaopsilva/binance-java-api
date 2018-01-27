@@ -1,5 +1,7 @@
 package com.binance.api.client.domain.event;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -241,17 +243,28 @@ public class AllMarketTickersEvent {
 
   @Override
   public String toString() {
-    return "AllMarketTickersEvent [eventType=" + eventType + ", eventTime=" + eventTime
-        + ", symbol=" + symbol + ", priceChange=" + priceChange + ", priceChangePercent="
-        + priceChangePercent + ", weightedAveragePrice=" + weightedAveragePrice
-        + ", previousDaysClosePrice=" + previousDaysClosePrice + ", currentDaysClosePrice="
-        + currentDaysClosePrice + ", closeTradesQuantity=" + closeTradesQuantity
-        + ", bestAskPrice=" + bestAskPrice + ", bestAskQuantity=" + bestAskQuantity
-        + ", openPrice=" + openPrice + ", highPrice=" + highPrice + ", lowPrice=" + lowPrice
-        + ", totalTradedBaseAssetVolume=" + totalTradedBaseAssetVolume
-        + ", totalTradedQuoteAssetVolume=" + totalTradedQuoteAssetVolume + ", statisticesOpenTime="
-        + statisticesOpenTime + ", statisticesCloseTime=" + statisticesCloseTime
-        + ", firstTradeId=" + firstTradeId + ", lastTradeId=" + lastTradeId
-        + ", totalNumberOfTrades=" + totalNumberOfTrades + "]";
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        .append("eventType", eventType)
+        .append("eventTime", eventTime)
+        .append("symbol", symbol)
+        .append("priceChange", priceChange)
+        .append("priceChangePercent", priceChangePercent)
+        .append("weightedAveragePrice", weightedAveragePrice)
+        .append("previousDaysClosePrice", previousDaysClosePrice)
+        .append("currentDaysClosePrice", currentDaysClosePrice)
+        .append("closeTradesQuantity", closeTradesQuantity)
+        .append("bestAskPrice", bestAskPrice)
+        .append("bestAskQuantity", bestAskQuantity)
+        .append("openPrice", openPrice)
+        .append("highPrice", highPrice)
+        .append("lowPrice", lowPrice)
+        .append("totalTradedBaseAssetVolume", totalTradedBaseAssetVolume)
+        .append("totalTradedQuoteAssetVolume", totalTradedQuoteAssetVolume)
+        .append("statisticesOpenTime", statisticesOpenTime)
+        .append("statisticesCloseTime", statisticesCloseTime)
+        .append("firstTradeId", firstTradeId)
+        .append("lastTradeId", lastTradeId)
+        .append("totalNumberOfTrades", totalNumberOfTrades)
+        .toString();
   }
 }
