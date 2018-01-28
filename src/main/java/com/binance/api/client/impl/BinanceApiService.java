@@ -61,9 +61,15 @@ public interface BinanceApiService {
 
   @GET("/api/v1/ticker/24hr")
   Call<TickerStatistics> get24HrPriceStatistics(@Query("symbol") String symbol);
+  
+  @GET("/api/v1/ticker/24hr")
+  Call<List<TickerStatistics>> getAll24HrPriceStatistics();
 
   @GET("/api/v1/ticker/allPrices")
   Call<List<TickerPrice>> getLatestPrices();
+  
+  @GET("/api/v3/ticker/price")
+  Call<TickerPrice> getSymbolPrice(@Query("symbol") String symbol);
 
   @GET("/api/v1/ticker/allBookTickers")
   Call<List<BookTicker>> getBookTickers();

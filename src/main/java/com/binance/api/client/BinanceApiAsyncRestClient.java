@@ -108,6 +108,13 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response
    */
   void get24HrPriceStatistics(String symbol, BinanceApiCallback<TickerStatistics> callback);
+  
+  /**
+   * Get 24 hour price change statistics for all symbols (asynchronous).
+   * 
+   * @param callback the callback that handles the response
+   */
+   void getAll24HrPriceStatistics(BinanceApiCallback<List<TickerStatistics>> callback);
 
   /**
    * Get Latest price for all symbols (asynchronous).
@@ -115,6 +122,14 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response
    */
   void getAllPrices(BinanceApiCallback<List<TickerPrice>> callback);
+  
+  /**
+   * Get latest price for <code>symbol</code> (asynchronous).
+   * 
+   * @param symbol ticker symbol (e.g. ETHBTC)
+   * @param callback the callback that handles the response
+   */
+   void getSymbolPrice(String symbol , BinanceApiCallback<TickerPrice> callback);
 
   /**
    * Get best price/qty on the order book for all symbols (asynchronous).
