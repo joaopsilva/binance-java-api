@@ -281,7 +281,7 @@ BinanceApiWebSocketClient client = BinanceApiClientFactory.newInstance().newWebS
 
 #### Handling web socket errors
 
-Each of the methods `BinanceApiWebSocketClient` which open a new web socket takes a `BinanceApiCallback`, which is
+Each of the methods on `BinanceApiWebSocketClient`, which opens a new web socket, takes a `BinanceApiCallback`, which is
 called for each event received from the Binance servers. 
 
 The `BinanceApiCallback` interface also has a `onFailure(Throwable)` method, which, optionally, can be implemented to 
@@ -304,7 +304,7 @@ client.onAggTradeEvent(symbol.toLowerCase(), new BinanceApiCallback<AggTradeEven
 
 #### Closing web sockets
 
-Each of the methods `BinanceApiWebSocketClient` which open a new web socket also return a `Closeable`.
+Each of the methods on `BinanceApiWebSocketClient`, which opens a new web socket, also returns a `Closeable`.
 This `Closeable` can be used to close the underlying web socket and free any associated resources, e.g.
 
 ```java
