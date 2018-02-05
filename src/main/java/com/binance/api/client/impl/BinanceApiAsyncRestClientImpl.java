@@ -92,7 +92,7 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   
   @Override
   public void getAll24HrPriceStatistics(BinanceApiCallback<List<TickerStatistics>> callback) {
-	  binanceApiService.getAll24HrPriceStatistics().enqueue(new BinanceApiCallbackAdapter<>(callback));
+    binanceApiService.getAll24HrPriceStatistics().enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
@@ -101,8 +101,8 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   }
   
   @Override
-  public void getSymbolPrice(String symbol , BinanceApiCallback<TickerPrice> callback) {
-	  binanceApiService.getSymbolPrice(symbol).enqueue(new BinanceApiCallbackAdapter<>(callback));
+  public void getPrice(String symbol , BinanceApiCallback<TickerPrice> callback) {
+    binanceApiService.getLatestPrice(symbol).enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override

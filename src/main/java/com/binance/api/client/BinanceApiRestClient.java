@@ -121,7 +121,7 @@ public interface BinanceApiRestClient {
    * 
    * @param symbol ticker symbol (e.g. ETHBTC)
    */
-  TickerPrice getSymbolPrice(String symbol);
+  TickerPrice getPrice(String symbol);
 
   /**
    * Get best price/qty on the order book for all symbols.

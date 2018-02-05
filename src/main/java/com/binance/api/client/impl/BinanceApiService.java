@@ -69,7 +69,7 @@ public interface BinanceApiService {
   Call<List<TickerPrice>> getLatestPrices();
   
   @GET("/api/v3/ticker/price")
-  Call<TickerPrice> getSymbolPrice(@Query("symbol") String symbol);
+  Call<TickerPrice> getLatestPrice(@Query("symbol") String symbol);
 
   @GET("/api/v1/ticker/allBookTickers")
   Call<List<BookTicker>> getBookTickers();
