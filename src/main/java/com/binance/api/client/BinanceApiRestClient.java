@@ -105,11 +105,23 @@ public interface BinanceApiRestClient {
    * @param symbol ticker symbol (e.g. ETHBTC)
    */
   TickerStatistics get24HrPriceStatistics(String symbol);
+  
+  /**
+   * Get 24 hour price change statistics for all symbols.
+   */
+  List<TickerStatistics> getAll24HrPriceStatistics();
 
   /**
    * Get Latest price for all symbols.
    */
   List<TickerPrice> getAllPrices();
+  
+  /**
+   * Get latest price for <code>symbol</code>.
+   * 
+   * @param symbol ticker symbol (e.g. ETHBTC)
+   */
+  TickerPrice getPrice(String symbol);
 
   /**
    * Get best price/qty on the order book for all symbols.
