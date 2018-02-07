@@ -1,8 +1,8 @@
 package com.binance.api.client.domain.account;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * A withdraw that was done to a Binance account.
@@ -110,7 +110,7 @@ public class Withdraw {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("amount", amount)
         .append("address", address)
         .append("asset", asset)

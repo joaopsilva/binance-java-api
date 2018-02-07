@@ -1,5 +1,6 @@
 package com.binance.api.domain.general;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.FilterType;
@@ -9,12 +10,14 @@ import com.binance.api.client.domain.general.RateLimitType;
 import com.binance.api.client.domain.general.SymbolFilter;
 import com.binance.api.client.domain.general.SymbolInfo;
 import com.binance.api.client.domain.general.SymbolStatus;
+import com.binance.api.client.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

@@ -98,3 +98,4 @@ target/
 # Ignore files and folders starting with dot (except gitignore)
 .*
 !/.gitignore
+/nbproject/
