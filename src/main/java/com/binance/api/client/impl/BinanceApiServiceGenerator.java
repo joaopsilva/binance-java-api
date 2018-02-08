@@ -19,7 +19,7 @@ import java.lang.annotation.Annotation;
  */
 public class BinanceApiServiceGenerator {
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder =
         new Retrofit.Builder()
