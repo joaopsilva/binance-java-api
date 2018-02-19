@@ -1,5 +1,6 @@
 package com.binance.api.client.domain.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -8,8 +9,9 @@ import java.util.List;
 /**
  * Account information.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
-
+	
   /**
    * Maker commission.
    */
@@ -44,6 +46,11 @@ public class Account {
    * Whether or not it is possible to deposit into this account.
    */
   private boolean canDeposit;
+  
+  /**
+   * Last update time for this account.
+   */
+  private long updateTime;
 
   private List<AssetBalance> balances;
 
@@ -101,6 +108,14 @@ public class Account {
 
   public void setCanDeposit(boolean canDeposit) {
     this.canDeposit = canDeposit;
+  }
+  
+  public long getUpdateTime() {
+	  return updateTime;
+  }
+
+  public void setUpdateTime(long updateTime) {
+	  this.updateTime = updateTime;
   }
 
   public List<AssetBalance> getBalances() {
