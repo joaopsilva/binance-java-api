@@ -1,7 +1,7 @@
 package com.binance.api.client.domain.general;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Exchange Filters define trading rules an exchange.
@@ -34,7 +34,7 @@ public class ExchangeFilter {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("filterType", filterType)
         .append("limit", limit)
         .toString();
