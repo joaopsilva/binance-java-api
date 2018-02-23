@@ -54,7 +54,7 @@ public interface BinanceApiService {
   @GET("/api/v1/trades")
   Call<List<TradeHistoryItem>> getTrades(@Query("symbol") String symbol, @Query("limit") Integer limit);
 
-  @GET("/api/v1/trades")
+  @GET("/api/v1/historicalTrades")
   Call<List<TradeHistoryItem>> getHistoricalTrades(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId);
 
   @GET("/api/v1/aggTrades")
