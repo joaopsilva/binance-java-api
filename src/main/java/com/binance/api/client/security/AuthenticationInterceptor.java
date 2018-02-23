@@ -10,6 +10,7 @@ import okio.Buffer;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * A request interceptor that injects the API Key Header into requests, and signs messages, whenever required.
@@ -60,10 +61,10 @@ public class AuthenticationInterceptor implements Interceptor {
      *
      * @return request body as a string
      */
+    @SuppressWarnings("unused")
     private static String bodyToString(RequestBody request) {
-        try {
+        try (final Buffer buffer = new Buffer()) {
             final RequestBody copy = request;
-            final Buffer buffer = new Buffer();
             if (copy != null) {
                 copy.writeTo(buffer);
             } else {
@@ -73,5 +74,19 @@ public class AuthenticationInterceptor implements Interceptor {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final AuthenticationInterceptor that = (AuthenticationInterceptor) o;
+        return Objects.equals(apiKey, that.apiKey) &&
+                Objects.equals(secret, that.secret);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(apiKey, secret);
     }
 }

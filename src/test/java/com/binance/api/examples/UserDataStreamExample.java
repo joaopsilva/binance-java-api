@@ -6,7 +6,6 @@ import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.event.AccountUpdateEvent;
 import com.binance.api.client.domain.event.OrderTradeUpdateEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent.UserDataUpdateEventType;
-import com.binance.api.client.impl.BinanceApiWebSocketClientImpl;
 
 /**
  * User data stream endpoints examples.

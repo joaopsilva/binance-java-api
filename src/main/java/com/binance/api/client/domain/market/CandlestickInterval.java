@@ -12,7 +12,7 @@ public enum CandlestickInterval {
   HALF_HOURLY("30m"),
   HOURLY("1h"),
   TWO_HOURLY("2h"),
-  FOUR_HORLY("4h"),
+  FOUR_HOURLY("4h"),
   SIX_HOURLY("6h"),
   EIGHT_HOURLY("8h"),
   TWELVE_HOURLY("12h"),

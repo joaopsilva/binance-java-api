@@ -1,13 +1,16 @@
 package com.binance.api.client.domain.event;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * An interval candlestick for a symbol providing informations on price that can be used to produce candlestick charts.
  */
 @JsonDeserialize(using = CandlestickEventDeserializer.class)
+@JsonSerialize(using = CandlestickEventSerializer.class)
 public class CandlestickEvent {
 
   private String eventType;
@@ -31,7 +34,9 @@ public class CandlestickEvent {
   private Long closeTime;
 
   private String intervalId;
+
   private Long firstTradeId;
+
   private Long lastTradeId;
 
   private String quoteAssetVolume;
@@ -190,7 +195,7 @@ public class CandlestickEvent {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("eventType", eventType)
         .append("eventTime", eventTime)
         .append("symbol", symbol)

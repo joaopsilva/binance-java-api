@@ -1,18 +1,20 @@
 package com.binance.api.client.impl;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.List;
+import okhttp3.Dispatcher;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.event.AggTradeEvent;
+import com.binance.api.client.domain.event.AllMarketTickersEvent;
 import com.binance.api.client.domain.event.CandlestickEvent;
 import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
 import com.binance.api.client.domain.market.CandlestickInterval;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-
-import java.io.Closeable;
-import java.io.IOException;
 
 /**
  * Binance API WebSocket client implementation using OkHttp.
@@ -22,7 +24,9 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
   private OkHttpClient client;
 
   public BinanceApiWebSocketClientImpl() {
-    this.client = new OkHttpClient();
+    Dispatcher d = new Dispatcher();
+    d.setMaxRequestsPerHost(100);
+    this.client = new OkHttpClient.Builder().dispatcher(d).build();
   }
 
   public void onDepthEvent(String symbol, BinanceApiCallback<DepthEvent> callback) {
@@ -45,6 +49,11 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
     createNewWebSocket(listenKey, new BinanceApiWebSocketListener<>(callback, UserDataUpdateEvent.class));
   }
 
+  public void onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback) {
+    final String channel = "!ticker@arr";
+    createNewWebSocket(channel, new BinanceApiWebSocketListener<List<AllMarketTickersEvent>>(callback));
+  }
+
   private void createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
     String streamingUrl = String.format("%s/%s", BinanceApiConstants.WS_API_BASE_URL, channel);
     Request request = new Request.Builder().url(streamingUrl).build();
@@ -55,4 +64,5 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
   public void close() throws IOException {
     client.dispatcher().executorService().shutdown();
   }
+
 }

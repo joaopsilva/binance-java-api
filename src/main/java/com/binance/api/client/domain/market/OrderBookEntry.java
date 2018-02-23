@@ -1,14 +1,18 @@
 package com.binance.api.client.domain.market;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * An order book entry consisting of price and quantity.
  */
 @JsonDeserialize(using = OrderBookEntryDeserializer.class)
+@JsonSerialize(using = OrderBookEntrySerializer.class)
 public class OrderBookEntry {
+
   private String price;
   private String qty;
 
@@ -30,7 +34,7 @@ public class OrderBookEntry {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("price", price)
         .append("qty", qty)
         .toString();
