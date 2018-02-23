@@ -20,6 +20,8 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
 
   private TypeReference<T> eventTypeReference;
 
+  private boolean closing = false;
+
   public BinanceApiWebSocketListener(BinanceApiCallback<T> callback, Class<T> eventClass) {
     this.callback = callback;
     this.eventClass = eventClass;
@@ -47,7 +49,14 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
   }
 
   @Override
+  public void onClosing(final WebSocket webSocket, final int code, final String reason) {
+    closing = true;
+  }
+
+  @Override
   public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-    throw new BinanceApiException(t);
+    if (!closing) {
+      callback.onFailure(t);
+    }
   }
 }
