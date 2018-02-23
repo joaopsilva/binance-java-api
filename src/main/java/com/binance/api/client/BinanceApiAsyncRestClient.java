@@ -7,6 +7,7 @@ import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.Trade;
+import com.binance.api.client.domain.account.TradeHistoryItem;
 import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -57,6 +58,25 @@ public interface BinanceApiAsyncRestClient {
    * @param callback the callback that handles the response
    */
   void getOrderBook(String symbol, Integer limit, BinanceApiCallback<OrderBook> callback);
+
+  /**
+   * Get recent trades (up to last 500). Weight: 1
+   *
+   * @param symbol ticker symbol (e.g. ETHBTC)
+   * @param limit of last trades (Default 500; max 500.)
+   * @param callback the callback that handles the response
+   */
+  void getTrades(String symbol, Integer limit, BinanceApiCallback<List<TradeHistoryItem>> callback);
+
+  /**
+   * Get older trades. Weight: 5
+   *
+   * @param symbol ticker symbol (e.g. ETHBTC)
+   * @param limit of last trades (Default 500; max 500.)
+   * @param fromId TradeId to fetch from. Default gets most recent trades.
+   * @param callback the callback that handles the response
+   */
+  void getHistoricalTrades(String symbol, Integer limit, Long fromId, BinanceApiCallback<List<TradeHistoryItem>> callback);
 
   /**
    * Get compressed, aggregate trades. Trades that fill at the time, from the same order, with
