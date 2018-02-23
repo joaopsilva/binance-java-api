@@ -2,14 +2,7 @@ package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.constant.BinanceApiConstants;
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.WithdrawHistory;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
@@ -61,6 +54,16 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   @Override
   public OrderBook getOrderBook(String symbol, Integer limit) {
     return executeSync(binanceApiService.getOrderBook(symbol, limit));
+  }
+
+  @Override
+  public List<TradeHistoryItem> getTrades(String symbol, Integer limit) {
+    return executeSync(binanceApiService.getTrades(symbol, limit));
+  }
+
+  @Override
+  public List<TradeHistoryItem> getHistoricalTrades(String symbol, Integer limit, Long fromId) {
+    return executeSync(binanceApiService.getHistoricalTrades(symbol, limit, fromId));
   }
 
   @Override

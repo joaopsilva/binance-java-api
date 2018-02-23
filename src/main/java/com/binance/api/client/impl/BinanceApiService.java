@@ -4,13 +4,7 @@ import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.WithdrawHistory;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
@@ -50,6 +44,12 @@ public interface BinanceApiService {
 
   @GET("/api/v1/depth")
   Call<OrderBook> getOrderBook(@Query("symbol") String symbol, @Query("limit") Integer limit);
+
+  @GET("/api/v1/trades")
+  Call<List<TradeHistoryItem>> getTrades(@Query("symbol") String symbol, @Query("limit") Integer limit);
+
+  @GET("/api/v1/trades")
+  Call<List<TradeHistoryItem>> getHistoricalTrades(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId);
 
   @GET("/api/v1/aggTrades")
   Call<List<AggTrade>> getAggTrades(@Query("symbol") String symbol, @Query("fromId") String fromId, @Query("limit") Integer limit,
