@@ -20,6 +20,19 @@ import java.util.function.Consumer;
 
 /**
  * Illustrates how to use the depth event stream to create a local cache of bids/asks for a symbol.
+ *
+ * Snapshots of the order book can be retrieved from the REST API.
+ * Delta changes to the book can be received by subscribing for updates via the web socket API.
+ *
+ * To ensure no updates are missed, it is important to subscribe for updates on the web socket API
+ * _before_ getting the snapshot from the REST API. Done the other way around it is possible to
+ * miss one or more updates on the web socket, leaving the local cache in an inconsistent state.
+ *
+ * Steps:
+ * 1. Subscribe to depth events and cache any events that are received.
+ * 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
+ * 3. Apply any cache events that have a final updateId later than the snapshot's update id.
+ * 4. Start applying any newly received depth events to the depth cache.
  */
 public class DepthCacheExample {
 
@@ -41,8 +54,10 @@ public class DepthCacheExample {
     wsClient = factory.newWebSocketClient();
     restClient = factory.newRestClient();
 
+    // 1. Subscribe to depth events and cache any events that are received.
     final List<DepthEvent> pendingDeltas = startDepthEventStreaming();
 
+    // 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
     initializeDepthCache();
 
     applyPendingDeltas(pendingDeltas);
@@ -63,7 +78,7 @@ public class DepthCacheExample {
   }
 
   /**
-   * Initializes the depth cache by getting a snapshot from the REST API.
+   * 2. Initializes the depth cache by getting a snapshot from the REST API.
    */
   private void initializeDepthCache() {
     OrderBook orderBook = restClient.getOrderBook(symbol.toUpperCase(), 10);
@@ -84,8 +99,7 @@ public class DepthCacheExample {
   }
 
   /**
-   * Apply any deltas received on the web socket that have an update-id indicating they come after
-   * the snapshot, that the rest client returned, was generated.
+   * Deal with any cached updates and switch to normal running.
    */
   private void applyPendingDeltas(final List<DepthEvent> pendingDeltas) {
     final Consumer<DepthEvent> updateOrderBook = newEvent -> {
@@ -101,10 +115,13 @@ public class DepthCacheExample {
     final Consumer<DepthEvent> drainPending = newEvent -> {
       pendingDeltas.add(newEvent);
 
+      // 3. Apply any deltas received on the web socket that have an update-id indicating they come
+      // after the snapshot.
       pendingDeltas.stream()
           .filter(e -> e.getFinalUpdateId() > lastUpdateId) // Ignore any updates before the snapshot
           .forEach(updateOrderBook);
 
+      // 4. Start applying any newly received depth events to the depth cache.
       wsCallback.set(updateOrderBook);
     };
 
