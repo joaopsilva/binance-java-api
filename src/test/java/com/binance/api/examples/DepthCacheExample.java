@@ -1,5 +1,6 @@
 package com.binance.api.examples;
 
+import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
@@ -7,6 +8,8 @@ import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.OrderBookEntry;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -33,6 +36,8 @@ import java.util.function.Consumer;
  * 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
  * 3. Apply any cache events that have a final updateId later than the snapshot's update id.
  * 4. Start applying any newly received depth events to the depth cache.
+ *
+ * The example repeats these steps, on a new web socket, should the web socket connection be lost.
  */
 public class DepthCacheExample {
 
@@ -42,24 +47,30 @@ public class DepthCacheExample {
   private final String symbol;
   private final BinanceApiRestClient restClient;
   private final BinanceApiWebSocketClient wsClient;
-  private final AtomicReference<Consumer<DepthEvent>> wsCallback = new AtomicReference<>();
+  private final WsCallback wsCallback = new WsCallback();
   private final Map<String, NavigableMap<BigDecimal, BigDecimal>> depthCache = new HashMap<>();
 
   private long lastUpdateId = -1;
+  private volatile Closeable webSocket;
 
   public DepthCacheExample(String symbol) {
     this.symbol = symbol;
 
     BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
-    wsClient = factory.newWebSocketClient();
-    restClient = factory.newRestClient();
+    this.wsClient = factory.newWebSocketClient();
+    this.restClient = factory.newRestClient();
 
+    initialize();
+  }
+
+  private void initialize() {
     // 1. Subscribe to depth events and cache any events that are received.
     final List<DepthEvent> pendingDeltas = startDepthEventStreaming();
 
     // 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
     initializeDepthCache();
 
+    // 3. & 4. handled in here.
     applyPendingDeltas(pendingDeltas);
   }
 
@@ -70,9 +81,9 @@ public class DepthCacheExample {
    */
   private List<DepthEvent> startDepthEventStreaming() {
     final List<DepthEvent> pendingDeltas = new CopyOnWriteArrayList<>();
-    wsCallback.set(pendingDeltas::add);
+    wsCallback.setHandler(pendingDeltas::add);
 
-    wsClient.onDepthEvent(symbol.toLowerCase(), event -> wsCallback.get().accept(event));
+    this.webSocket = wsClient.onDepthEvent(symbol.toLowerCase(), wsCallback);
 
     return pendingDeltas;
   }
@@ -118,14 +129,15 @@ public class DepthCacheExample {
       // 3. Apply any deltas received on the web socket that have an update-id indicating they come
       // after the snapshot.
       pendingDeltas.stream()
-          .filter(e -> e.getFinalUpdateId() > lastUpdateId) // Ignore any updates before the snapshot
+          .filter(
+              e -> e.getFinalUpdateId() > lastUpdateId) // Ignore any updates before the snapshot
           .forEach(updateOrderBook);
 
       // 4. Start applying any newly received depth events to the depth cache.
-      wsCallback.set(updateOrderBook);
+      wsCallback.setHandler(updateOrderBook);
     };
 
-    wsCallback.set(drainPending);
+    wsCallback.setHandler(drainPending);
   }
 
   /**
@@ -133,7 +145,8 @@ public class DepthCacheExample {
    *
    * Whenever the qty specified is ZERO, it means the price should was removed from the order book.
    */
-  private void updateOrderBook(NavigableMap<BigDecimal, BigDecimal> lastOrderBookEntries, List<OrderBookEntry> orderBookDeltas) {
+  private void updateOrderBook(NavigableMap<BigDecimal, BigDecimal> lastOrderBookEntries,
+                               List<OrderBookEntry> orderBookDeltas) {
     for (OrderBookEntry orderBookDelta : orderBookDeltas) {
       BigDecimal price = new BigDecimal(orderBookDelta.getPrice());
       BigDecimal qty = new BigDecimal(orderBookDelta.getQty());
@@ -175,6 +188,10 @@ public class DepthCacheExample {
     return depthCache;
   }
 
+  public void close() throws IOException {
+    webSocket.close();
+  }
+
   /**
    * Prints the cached order book / depth of a symbol as well as the best ask and bid price in the book.
    */
@@ -197,5 +214,31 @@ public class DepthCacheExample {
 
   public static void main(String[] args) {
     new DepthCacheExample("ETHBTC");
+  }
+
+  private final class WsCallback implements BinanceApiCallback<DepthEvent> {
+
+    private final AtomicReference<Consumer<DepthEvent>> handler = new AtomicReference<>();
+
+    @Override
+    public void onResponse(DepthEvent depthEvent) {
+      try {
+        handler.get().accept(depthEvent);
+      } catch (final Exception e) {
+        System.err.println("Exception caught processing depth event");
+        e.printStackTrace(System.err);
+      }
+    }
+
+    @Override
+    public void onFailure(Throwable cause) {
+      System.out.println("WS connection failed. Reconnecting. cause:" + cause.getMessage());
+
+      initialize();
+    }
+
+    private void setHandler(final Consumer<DepthEvent> handler) {
+      this.handler.set(handler);
+    }
   }
 }
