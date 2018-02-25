@@ -3,6 +3,7 @@ package com.binance.api.examples;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.domain.event.DepthEvent;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.OrderBookEntry;
 
@@ -13,33 +14,75 @@ import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Illustrates how to use the depth event stream to create a local cache of bids/asks for a symbol.
+ *
+ * Snapshots of the order book can be retrieved from the REST API.
+ * Delta changes to the book can be received by subscribing for updates via the web socket API.
+ *
+ * To ensure no updates are missed, it is important to subscribe for updates on the web socket API
+ * _before_ getting the snapshot from the REST API. Done the other way around it is possible to
+ * miss one or more updates on the web socket, leaving the local cache in an inconsistent state.
+ *
+ * Steps:
+ * 1. Subscribe to depth events and cache any events that are received.
+ * 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
+ * 3. Apply any cache events that have a final updateId later than the snapshot's update id.
+ * 4. Start applying any newly received depth events to the depth cache.
  */
 public class DepthCacheExample {
 
-  private static final String BIDS  = "BIDS";
-  private static final String ASKS  = "ASKS";
+  private static final String BIDS = "BIDS";
+  private static final String ASKS = "ASKS";
 
-  private long lastUpdateId;
+  private final String symbol;
+  private final BinanceApiRestClient restClient;
+  private final BinanceApiWebSocketClient wsClient;
+  private final AtomicReference<Consumer<DepthEvent>> wsCallback = new AtomicReference<>();
+  private final Map<String, NavigableMap<BigDecimal, BigDecimal>> depthCache = new HashMap<>();
 
-  private Map<String, NavigableMap<BigDecimal, BigDecimal>> depthCache;
+  private long lastUpdateId = -1;
 
   public DepthCacheExample(String symbol) {
-    initializeDepthCache(symbol);
-    startDepthEventStreaming(symbol);
+    this.symbol = symbol;
+
+    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
+    wsClient = factory.newWebSocketClient();
+    restClient = factory.newRestClient();
+
+    // 1. Subscribe to depth events and cache any events that are received.
+    final List<DepthEvent> pendingDeltas = startDepthEventStreaming();
+
+    // 2. Get a snapshot from the rest endpoint and use it to build your initial depth cache.
+    initializeDepthCache();
+
+    applyPendingDeltas(pendingDeltas);
   }
 
   /**
-   * Initializes the depth cache by using the REST API.
+   * Begins streaming of depth events.
+   *
+   * Any events received are cached until the rest API is polled for an initial snapshot.
    */
-  private void initializeDepthCache(String symbol) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
-    BinanceApiRestClient client = factory.newRestClient();
-    OrderBook orderBook = client.getOrderBook(symbol.toUpperCase(), 10);
+  private List<DepthEvent> startDepthEventStreaming() {
+    final List<DepthEvent> pendingDeltas = new CopyOnWriteArrayList<>();
+    wsCallback.set(pendingDeltas::add);
 
-    this.depthCache = new HashMap<>();
+    wsClient.onDepthEvent(symbol.toLowerCase(), event -> wsCallback.get().accept(event));
+
+    return pendingDeltas;
+  }
+
+  /**
+   * 2. Initializes the depth cache by getting a snapshot from the REST API.
+   */
+  private void initializeDepthCache() {
+    OrderBook orderBook = restClient.getOrderBook(symbol.toUpperCase(), 10);
+
     this.lastUpdateId = orderBook.getLastUpdateId();
 
     NavigableMap<BigDecimal, BigDecimal> asks = new TreeMap<>(Comparator.reverseOrder());
@@ -56,21 +99,33 @@ public class DepthCacheExample {
   }
 
   /**
-   * Begins streaming of depth events.
+   * Deal with any cached updates and switch to normal running.
    */
-  private void startDepthEventStreaming(String symbol) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
-    BinanceApiWebSocketClient client = factory.newWebSocketClient();
-
-    client.onDepthEvent(symbol.toLowerCase(), response -> {
-      if (response.getFinalUpdateId() > lastUpdateId) {
-        System.out.println(response);
-        lastUpdateId = response.getFinalUpdateId();
-        updateOrderBook(getAsks(), response.getAsks());
-        updateOrderBook(getBids(), response.getBids());
+  private void applyPendingDeltas(final List<DepthEvent> pendingDeltas) {
+    final Consumer<DepthEvent> updateOrderBook = newEvent -> {
+      if (newEvent.getFinalUpdateId() > lastUpdateId) {
+        System.out.println(newEvent);
+        lastUpdateId = newEvent.getFinalUpdateId();
+        updateOrderBook(getAsks(), newEvent.getAsks());
+        updateOrderBook(getBids(), newEvent.getBids());
         printDepthCache();
       }
-    });
+    };
+
+    final Consumer<DepthEvent> drainPending = newEvent -> {
+      pendingDeltas.add(newEvent);
+
+      // 3. Apply any deltas received on the web socket that have an update-id indicating they come
+      // after the snapshot.
+      pendingDeltas.stream()
+          .filter(e -> e.getFinalUpdateId() > lastUpdateId) // Ignore any updates before the snapshot
+          .forEach(updateOrderBook);
+
+      // 4. Start applying any newly received depth events to the depth cache.
+      wsCallback.set(updateOrderBook);
+    };
+
+    wsCallback.set(drainPending);
   }
 
   /**
