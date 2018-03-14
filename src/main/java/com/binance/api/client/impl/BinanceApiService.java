@@ -15,6 +15,7 @@ import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
+import com.binance.api.client.domain.general.AllAssets;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
 import com.binance.api.client.domain.market.Candlestick;
@@ -47,6 +48,9 @@ public interface BinanceApiService {
   @GET("/api/v1/exchangeInfo")
   Call<ExchangeInfo> getExchangeInfo();
 
+  @GET("/assetWithdraw/getAllAsset.html")
+  Call<AllAssets> getAllAssets();
+
   // Market data endpoints
 
   @GET("/api/v1/depth")
@@ -69,13 +73,13 @@ public interface BinanceApiService {
 
   @GET("/api/v1/ticker/24hr")
   Call<TickerStatistics> get24HrPriceStatistics(@Query("symbol") String symbol);
-  
+
   @GET("/api/v1/ticker/24hr")
   Call<List<TickerStatistics>> getAll24HrPriceStatistics();
 
   @GET("/api/v1/ticker/allPrices")
   Call<List<TickerPrice>> getLatestPrices();
-  
+
   @GET("/api/v3/ticker/price")
   Call<TickerPrice> getLatestPrice(@Query("symbol") String symbol);
 
