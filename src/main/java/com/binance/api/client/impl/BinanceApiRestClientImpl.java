@@ -15,6 +15,7 @@ import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
+import com.binance.api.client.domain.general.AllAssets;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
@@ -50,6 +51,11 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   @Override
   public Long getServerTime() {
     return executeSync(binanceApiService.getServerTime()).getServerTime();
+  }
+
+  @Override
+  public AllAssets getAllAssets() {
+    return executeSync(binanceApiService.getAllAssets());
   }
 
   @Override
@@ -108,7 +114,7 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   public TickerPrice getPrice(String symbol) {
 	  return executeSync(binanceApiService.getLatestPrice(symbol));
   }
-  
+
   @Override
   public List<TickerPrice> getAllPrices() {
     return executeSync(binanceApiService.getLatestPrices());
