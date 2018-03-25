@@ -17,6 +17,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
+import com.binance.api.client.domain.general.AllAssets;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
 import com.binance.api.client.domain.market.AggTrade;
@@ -52,6 +53,11 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   @Override
   public void getServerTime(BinanceApiCallback<ServerTime> callback) {
     binanceApiService.getServerTime().enqueue(new BinanceApiCallbackAdapter<>(callback));
+  }
+
+  @Override
+  public void getAllAssets(BinanceApiCallback<AllAssets> callback) {
+    binanceApiService.getAllAssets().enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
@@ -100,7 +106,7 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   public void get24HrPriceStatistics(String symbol, BinanceApiCallback<TickerStatistics> callback) {
     binanceApiService.get24HrPriceStatistics(symbol).enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
-  
+
   @Override
   public void getAll24HrPriceStatistics(BinanceApiCallback<List<TickerStatistics>> callback) {
     binanceApiService.getAll24HrPriceStatistics().enqueue(new BinanceApiCallbackAdapter<>(callback));
@@ -110,7 +116,7 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   public void getAllPrices(BinanceApiCallback<List<TickerPrice>> callback) {
     binanceApiService.getLatestPrices().enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
-  
+
   @Override
   public void getPrice(String symbol , BinanceApiCallback<TickerPrice> callback) {
     binanceApiService.getLatestPrice(symbol).enqueue(new BinanceApiCallbackAdapter<>(callback));
