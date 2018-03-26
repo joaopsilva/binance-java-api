@@ -1,15 +1,15 @@
 package com.binance.api.client.domain.general;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * All assets Binance supports.
+ * An asset Binance supports.
  */
  @JsonIgnoreProperties(ignoreUnknown = true)
- public class AllAssets {
+ public class Asset {
 
    @JsonProperty("id")
    private String id;
@@ -24,22 +24,22 @@ import org.apache.commons.lang3.builder.ToStringStyle;
    private String unit;
 
    @JsonProperty("transactionFee")
-   private long transactionFee;
+   private String transactionFee;
 
    @JsonProperty("commissionRate")
-   private long commissionRate;
+   private String commissionRate;
 
    @JsonProperty("freeAuditWithdrawAmt")
-   private long freeAuditWithdrawAmount;
+   private String freeAuditWithdrawAmount;
 
    @JsonProperty("freeUserChargeAmount")
-   private long freeUserChargeAmount;
+   private String freeUserChargeAmount;
 
    @JsonProperty("minProductWithdraw")
-   private long minProductWithdraw;
+   private String minProductWithdraw;
 
    @JsonProperty("withdrawIntegerMultiple")
-   private long withdrawIntegerMultiple;
+   private String withdrawIntegerMultiple;
 
    @JsonProperty("confirmTimes")
    private long confirmTimes;
@@ -66,27 +66,27 @@ import org.apache.commons.lang3.builder.ToStringStyle;
      return unit;
    }
 
-   public long getTransactionFee() {
+   public String getTransactionFee() {
      return transactionFee;
    }
 
-   public long getCommissionRate() {
+   public String getCommissionRate() {
      return commissionRate;
    }
 
-   public long getFreeAuditWithdrawAmount() {
+   public String getFreeAuditWithdrawAmount() {
      return freeAuditWithdrawAmount;
    }
 
-   public long getFreeUserChargeAmount() {
+   public String getFreeUserChargeAmount() {
      return freeUserChargeAmount;
    }
 
-   public long minProductWithdraw() {
+   public String minProductWithdraw() {
      return minProductWithdraw;
    }
 
-   public long getWithdrawIntegerMultiple() {
+   public String getWithdrawIntegerMultiple() {
      return withdrawIntegerMultiple;
    }
 
@@ -94,17 +94,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
      return confirmTimes;
    }
 
-   public long canWithraw() {
+   public boolean canWithraw() {
      return enableWithdraw;
    }
 
-   public long isLegalMoney() {
+   public boolean isLegalMoney() {
      return isLegalMoney;
    }
 
    @Override
    public String toString() {
-     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
          .append("id", id)
          .append("assetCode", assetCode)
          .append("assetName", assetName)

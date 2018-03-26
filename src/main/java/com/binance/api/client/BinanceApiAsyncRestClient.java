@@ -14,6 +14,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
+import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
 import com.binance.api.client.domain.market.AggTrade;
@@ -47,6 +48,11 @@ public interface BinanceApiAsyncRestClient {
    * Current exchange trading rules and symbol information
    */
   void getExchangeInfo(BinanceApiCallback<ExchangeInfo> callback);
+
+  /**
+   * ALL supported assets and whether or not they can be withdrawn.
+   */
+  void getAllAssets(BinanceApiCallback<List<Asset>> callback);
 
   // Market Data endpoints
 

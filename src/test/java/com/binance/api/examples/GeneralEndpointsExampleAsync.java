@@ -2,9 +2,12 @@ package com.binance.api.examples;
 
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiClientFactory;
+import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.general.FilterType;
 import com.binance.api.client.domain.general.SymbolFilter;
 import com.binance.api.client.domain.general.SymbolInfo;
+
+import java.util.List;
 
 /**
  * Examples on how to use the general endpoints.
@@ -34,5 +37,9 @@ public class GeneralEndpointsExampleAsync {
       System.out.println(priceFilter.getMinPrice());
       System.out.println(priceFilter.getTickSize());
     });
+
+    // Obtain asset information
+    client.getAllAssets(allAssets ->
+        System.out.println(allAssets.stream().filter(asset -> asset.getAssetCode().equals("BNB")).findFirst().get()));
   }
 }

@@ -17,7 +17,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
-import com.binance.api.client.domain.general.AllAssets;
+import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.ServerTime;
 import com.binance.api.client.domain.market.AggTrade;
@@ -56,13 +56,14 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   }
 
   @Override
-  public void getAllAssets(BinanceApiCallback<AllAssets> callback) {
-    binanceApiService.getAllAssets().enqueue(new BinanceApiCallbackAdapter<>(callback));
+  public void getExchangeInfo(BinanceApiCallback<ExchangeInfo> callback) {
+    binanceApiService.getExchangeInfo().enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
-  public void getExchangeInfo(BinanceApiCallback<ExchangeInfo> callback) {
-    binanceApiService.getExchangeInfo().enqueue(new BinanceApiCallbackAdapter<>(callback));
+  public void getAllAssets(BinanceApiCallback<List<Asset>> callback) {
+    binanceApiService.getAllAssets(BinanceApiConstants.ASSET_INFO_API_BASE_URL + "assetWithdraw/getAllAsset.html")
+        .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   // Market Data endpoints

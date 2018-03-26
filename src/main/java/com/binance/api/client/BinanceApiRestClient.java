@@ -14,7 +14,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.general.ExchangeInfo;
-import com.binance.api.client.domain.general.AllAssets;
+import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
 import com.binance.api.client.domain.market.Candlestick;
@@ -45,14 +45,14 @@ public interface BinanceApiRestClient {
   Long getServerTime();
 
   /**
-   * @return All the assets Binance supports and whether or not they can be withdrawn.
-   */
-  AllAssets getAllAssets();
-
-  /**
    * @return Current exchange trading rules and symbol information
    */
   ExchangeInfo getExchangeInfo();
+
+  /**
+   * @return All the supported assets and whether or not they can be withdrawn.
+   */
+  List<Asset> getAllAssets();
 
   // Market Data endpoints
 
