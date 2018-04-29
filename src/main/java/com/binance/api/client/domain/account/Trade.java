@@ -2,6 +2,7 @@ package com.binance.api.client.domain.account;
 
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -54,8 +55,16 @@ public class Trade {
     return id;
   }
 
+  @JsonSetter("id")
   public void setId(Long id) {
     this.id = id;
+  }
+
+  @JsonSetter("tradeId")
+  public void setTradeId(Long id) {
+    if (this.id == null) {
+      setId(id);
+    }
   }
 
   public String getPrice() {
