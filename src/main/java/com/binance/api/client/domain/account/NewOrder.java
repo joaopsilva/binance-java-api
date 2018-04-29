@@ -57,6 +57,11 @@ public class NewOrder {
   private String icebergQty;
 
   /**
+   * Set the response JSON. ACK, RESULT, or FULL; default: RESULT.
+   */
+  private NewOrderResponseType newOrderRespType;
+
+  /**
    * Receiving window.
    */
   private Long recvWindow;
@@ -75,6 +80,7 @@ public class NewOrder {
     this.type = type;
     this.timeInForce = timeInForce;
     this.quantity = quantity;
+    this.newOrderRespType = NewOrderResponseType.RESULT;
     this.timestamp = System.currentTimeMillis();
     this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
   }
@@ -168,6 +174,15 @@ public class NewOrder {
     return this;
   }
 
+  public NewOrderResponseType getNewOrderRespType() {
+    return newOrderRespType;
+  }
+
+  public NewOrder newOrderRespType(NewOrderResponseType newOrderRespType) {
+    this.newOrderRespType = newOrderRespType;
+    return this;
+  }
+
   public Long getRecvWindow() {
     return recvWindow;
   }
@@ -234,6 +249,7 @@ public class NewOrder {
         .append("newClientOrderId", newClientOrderId)
         .append("stopPrice", stopPrice)
         .append("icebergQty", icebergQty)
+        .append("newOrderRespType", newOrderRespType)
         .append("recvWindow", recvWindow)
         .append("timestamp", timestamp)
         .toString();
