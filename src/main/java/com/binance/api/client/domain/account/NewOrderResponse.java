@@ -37,6 +37,8 @@ public class NewOrderResponse {
 
   private String price;
 
+  private String origQty;
+
   private String executedQty;
 
   private OrderStatus status;
@@ -92,6 +94,14 @@ public class NewOrderResponse {
 
   public void setPrice(String price) {
     this.price = price;
+  }
+
+  public String getOrigQty() {
+    return origQty;
+  }
+
+  public void setOrigQty(String origQty) {
+    this.origQty = origQty;
   }
 
   public String getExecutedQty() {
@@ -150,6 +160,7 @@ public class NewOrderResponse {
         .append("clientOrderId", clientOrderId)
         .append("transactTime", transactTime)
         .append("price", price)
+        .append("origQty", origQty)
         .append("executedQty", executedQty)
         .append("status", status)
         .append("timeInForce", timeInForce)
