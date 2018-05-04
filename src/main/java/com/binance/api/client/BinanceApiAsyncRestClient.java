@@ -9,6 +9,7 @@ import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.TradeHistoryItem;
 import com.binance.api.client.domain.account.WithdrawHistory;
+import com.binance.api.client.domain.account.WithdrawResult;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
@@ -260,8 +261,9 @@ public interface BinanceApiAsyncRestClient {
    * @param address address to withdraw to
    * @param amount amount to withdraw
    * @param name description/alias of the address
+   * @param addressTag Secondary address identifier for coins like XRP,XMR etc.
    */
-  void withdraw(String asset, String address, String amount, String name, BinanceApiCallback<Void> callback);
+  void withdraw(String asset, String address, String amount, String name, String addressTag, BinanceApiCallback<WithdrawResult> callback);
 
   /**
    * Fetch account deposit history.
