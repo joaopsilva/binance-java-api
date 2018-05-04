@@ -186,7 +186,8 @@ System.out.println(order.getExecutedQty());
 
 #### Placing a MARKET order
 ```java
-NewOrderResponse newOrderResponse = client.newOrder(marketBuy("LINKETH", "1000"));
+NewOrderResponse newOrderResponse = client.newOrder(marketBuy("LINKETH", "1000").orderRespType(OrderResponseType.FULL));
+List<Trade> fills = newOrderResponse.getFills();
 System.out.println(newOrderResponse.getClientOrderId());
 ```
 <details>
