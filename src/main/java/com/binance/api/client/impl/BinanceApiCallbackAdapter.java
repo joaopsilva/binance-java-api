@@ -33,15 +33,19 @@ public class BinanceApiCallbackAdapter<T> implements Callback<T> {
       }
       try {
         BinanceApiError apiError = getBinanceApiError(response);
-        throw new BinanceApiException(apiError);
+        onFailure(call, new BinanceApiException(apiError));
       } catch (IOException e) {
-        throw new BinanceApiException(e);
+        onFailure(call, new BinanceApiException(e));
       }
     }
   }
 
   @Override
   public void onFailure(Call<T> call, Throwable throwable) {
-    throw new BinanceApiException(throwable);
+    if (throwable instanceof BinanceApiException) {
+      callback.onFailure(throwable);
+    } else {
+      callback.onFailure(new BinanceApiException(throwable));
+    }
   }
 }
