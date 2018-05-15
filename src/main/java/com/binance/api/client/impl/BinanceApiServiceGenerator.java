@@ -74,4 +74,11 @@ public class BinanceApiServiceGenerator {
     public static BinanceApiError getBinanceApiError(Response<?> response) throws IOException, BinanceApiException {
         return errorBodyConverter.convert(response.errorBody());
     }
+
+    /**
+     * Returns the shared OkHttpClient instance.
+     */
+    public static OkHttpClient getSharedClient() {
+        return sharedClient;
+    }
 }
