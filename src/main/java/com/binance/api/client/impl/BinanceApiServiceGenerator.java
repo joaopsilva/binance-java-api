@@ -16,12 +16,16 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Generates a Binance API implementation based on @see {@link BinanceApiService}.
  */
 public class BinanceApiServiceGenerator {
-    private static final OkHttpClient sharedClient = new OkHttpClient.Builder().build();
+    private static final OkHttpClient sharedClient = new OkHttpClient.Builder()
+            .pingInterval(20, TimeUnit.SECONDS)
+            .build();
+
     private static final Converter.Factory converterFactory = JacksonConverterFactory.create();
 
     @SuppressWarnings("unchecked")
