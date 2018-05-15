@@ -5,8 +5,11 @@ import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.exception.BinanceApiException;
 import com.binance.api.client.security.AuthenticationInterceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
 import retrofit2.Call;
+import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -18,29 +21,33 @@ import java.lang.annotation.Annotation;
  * Generates a Binance API implementation based on @see {@link BinanceApiService}.
  */
 public class BinanceApiServiceGenerator {
+    private static final OkHttpClient sharedClient = new OkHttpClient.Builder().build();
+    private static final Converter.Factory converterFactory = JacksonConverterFactory.create();
 
-    static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-    private static Retrofit.Builder builder =
-        new Retrofit.Builder()
-            .baseUrl(BinanceApiConstants.API_BASE_URL)
-            .addConverterFactory(JacksonConverterFactory.create());
-
-    private static Retrofit retrofit = builder.build();
+    @SuppressWarnings("unchecked")
+    private static final Converter<ResponseBody, BinanceApiError> errorBodyConverter =
+            (Converter<ResponseBody, BinanceApiError>)converterFactory.responseBodyConverter(
+                    BinanceApiError.class, new Annotation[0], null);
 
     public static <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, null, null);
     }
 
     public static <S> S createService(Class<S> serviceClass, String apiKey, String secret) {
-        if (!StringUtils.isEmpty(apiKey) && !StringUtils.isEmpty(secret)) {
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
+                .baseUrl(BinanceApiConstants.API_BASE_URL)
+                .addConverterFactory(converterFactory);
+
+        if (StringUtils.isEmpty(apiKey) || StringUtils.isEmpty(secret)) {
+            retrofitBuilder.client(sharedClient);
+        } else {
+            // `adaptedClient` will use its own interceptor, but share thread pool etc with the 'parent' client
             AuthenticationInterceptor interceptor = new AuthenticationInterceptor(apiKey, secret);
-            if (!httpClient.interceptors().contains(interceptor)) {
-                httpClient.addInterceptor(interceptor);
-                builder.client(httpClient.build());
-                retrofit = builder.build();
-            }
+            OkHttpClient adaptedClient = sharedClient.newBuilder().addInterceptor(interceptor).build();
+            retrofitBuilder.client(adaptedClient);
         }
+
+        Retrofit retrofit = retrofitBuilder.build();
         return retrofit.create(serviceClass);
     }
 
@@ -65,7 +72,6 @@ public class BinanceApiServiceGenerator {
      * Extracts and converts the response error body into an object.
      */
     public static BinanceApiError getBinanceApiError(Response<?> response) throws IOException, BinanceApiException {
-        return (BinanceApiError)retrofit.responseBodyConverter(BinanceApiError.class, new Annotation[0])
-            .convert(response.errorBody());
+        return errorBodyConverter.convert(response.errorBody());
     }
 }
