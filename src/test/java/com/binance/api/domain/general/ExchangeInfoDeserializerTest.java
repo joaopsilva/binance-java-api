@@ -31,7 +31,7 @@ public class ExchangeInfoDeserializerTest {
         "  \"timezone\": \"UTC\",\n" +
         "  \"serverTime\": 1508631584636,\n" +
         "  \"rateLimits\": [{\n" +
-        "      \"rateLimitType\": \"REQUESTS\",\n" +
+        "      \"rateLimitType\": \"REQUEST_WEIGHT\",\n" +
         "      \"interval\": \"MINUTE\",\n" +
         "      \"limit\": 1200\n" +
         "    },\n" +
@@ -81,7 +81,7 @@ public class ExchangeInfoDeserializerTest {
 
       List<RateLimit> rateLimits = exchangeInfo.getRateLimits();
       assertEquals(rateLimits.size(), 3);
-      testRateLimit(rateLimits.get(0), RateLimitType.REQUESTS, RateLimitInterval.MINUTE, 1200);
+      testRateLimit(rateLimits.get(0), RateLimitType.REQUEST_WEIGHT, RateLimitInterval.MINUTE, 1200);
       testRateLimit(rateLimits.get(1), RateLimitType.ORDERS, RateLimitInterval.SECOND, 10);
       testRateLimit(rateLimits.get(2), RateLimitType.ORDERS, RateLimitInterval.DAY, 100000);
 

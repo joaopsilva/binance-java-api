@@ -1,11 +1,13 @@
 package com.binance.api.client.domain.market;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Wraps a symbol and its corresponding latest price.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TickerPrice {
 
   /**

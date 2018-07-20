@@ -1,5 +1,7 @@
 package com.binance.api.client.domain.general;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Filters define trading rules on a symbol or an exchange. Filters come in two forms: symbol filters and exchange filters.
  *
@@ -13,6 +15,7 @@ package com.binance.api.client.domain.general;
  *
  * The MAX_ALGO_ORDERS filter defines the maximum number of "algo" orders an account is allowed to have open on a symbol. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SymbolFilter {
 
   // PRICE_FILTER

@@ -1,6 +1,7 @@
 package com.binance.api.client.domain.account;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @see Withdraw
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WithdrawHistory {
 
   private List<Withdraw> withdrawList;
