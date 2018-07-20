@@ -62,9 +62,18 @@ public class SymbolFilter {
    */
   private String minNotional;
 
+
+  // MAX_NUM_ALGO_ORDERS
+
+  /**
+   * Defines the maximum number of "algo" orders an account is allowed to have open on a symbol. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
+   */
+  private String maxNumAlgoOrders;
+
   /**
    * MAX_NUM_ORDERS filter defines the maximum number of orders an account is allowed to have open on a symbol. Note that both "algo" orders and normal orders are counted for this filter.
    * MAX_ALGO_ORDERS filter defines the maximum number of "algo" orders an account is allowed to have open on a symbol. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
+   * ICEBERG_PARTS filter defines the maximum parts an iceberg order can have. The number of ICEBERG_PARTS is defined as CEIL(qty / icebergQty).
    */
   private String limit;
 
@@ -130,6 +139,15 @@ public class SymbolFilter {
 
   public void setMinNotional(String minNotional) {
     this.minNotional = minNotional;
+  }
+
+  public String getMaxNumAlgoOrders() {
+    return maxNumAlgoOrders;
+  }
+
+  public SymbolFilter setMaxNumAlgoOrders(String maxNumAlgoOrders) {
+    this.maxNumAlgoOrders = maxNumAlgoOrders;
+    return this;
   }
 
   public String getLimit() {
