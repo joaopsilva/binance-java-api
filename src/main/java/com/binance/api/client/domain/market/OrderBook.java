@@ -1,6 +1,7 @@
 package com.binance.api.client.domain.market;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Order book of a symbol in Binance.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderBook {
 
   /**

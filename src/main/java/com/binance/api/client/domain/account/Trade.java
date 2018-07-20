@@ -1,6 +1,7 @@
 package com.binance.api.client.domain.account;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Represents an executed trade.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Trade {
 
   /**
