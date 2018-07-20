@@ -70,7 +70,7 @@ public interface BinanceApiAsyncRestClient {
    * Get recent trades (up to last 500). Weight: 1
    *
    * @param symbol ticker symbol (e.g. ETHBTC)
-   * @param limit of last trades (Default 500; max 500.)
+   * @param limit of last trades (Default 500; max 1000.)
    * @param callback the callback that handles the response
    */
   void getTrades(String symbol, Integer limit, BinanceApiCallback<List<TradeHistoryItem>> callback);
@@ -79,7 +79,7 @@ public interface BinanceApiAsyncRestClient {
    * Get older trades. Weight: 5
    *
    * @param symbol ticker symbol (e.g. ETHBTC)
-   * @param limit of last trades (Default 500; max 500.)
+   * @param limit of last trades (Default 500; max 1000.)
    * @param fromId TradeId to fetch from. Default gets most recent trades.
    * @param callback the callback that handles the response
    */
@@ -94,7 +94,7 @@ public interface BinanceApiAsyncRestClient {
    *
    * @param symbol symbol to aggregate (mandatory)
    * @param fromId ID to get aggregate trades from INCLUSIVE (optional)
-   * @param limit Default 500; max 500 (optional)
+   * @param limit Default 500; max 1000 (optional)
    * @param startTime Timestamp in ms to get aggregate trades from INCLUSIVE (optional).
    * @param endTime Timestamp in ms to get aggregate trades until INCLUSIVE (optional).
    * @param callback the callback that handles the response
@@ -114,7 +114,7 @@ public interface BinanceApiAsyncRestClient {
    *
    * @param symbol symbol to aggregate (mandatory)
    * @param interval candlestick interval (mandatory)
-   * @param limit Default 500; max 500 (optional)
+   * @param limit Default 500; max 1000 (optional)
    * @param startTime Timestamp in ms to get candlestick bars from INCLUSIVE (optional).
    * @param endTime Timestamp in ms to get candlestick bars until INCLUSIVE (optional).
    * @param callback the callback that handles the response containing a candlestick bar for the given symbol and interval
@@ -229,7 +229,7 @@ public interface BinanceApiAsyncRestClient {
    * Get trades for a specific account and symbol.
    *
    * @param symbol symbol to get trades from
-   * @param limit default 500; max 500
+   * @param limit default 500; max 1000
    * @param fromId TradeId to fetch from. Default gets most recent trades.
    * @param callback the callback that handles the response with a list of trades
    */
@@ -239,7 +239,7 @@ public interface BinanceApiAsyncRestClient {
    * Get trades for a specific account and symbol.
    *
    * @param symbol symbol to get trades from
-   * @param limit default 500; max 500
+   * @param limit default 500; max 1000
    * @param callback the callback that handles the response with a list of trades
    */
   void getMyTrades(String symbol, Integer limit, BinanceApiCallback<List<Trade>> callback);
