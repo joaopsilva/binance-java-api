@@ -40,6 +40,11 @@ public class Trade {
    */
   private long time;
 
+  /**
+   * The symbol of the trade.
+   */
+  private String symbol;
+
   @JsonProperty("isBuyer")
   private boolean buyer;
 
@@ -107,6 +112,14 @@ public class Trade {
     this.time = time;
   }
 
+  public String getSymbol() {
+    return symbol;
+  }
+
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
+
   public boolean isBuyer() {
     return buyer;
   }
@@ -143,6 +156,7 @@ public class Trade {
   public String toString() {
     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("id", id)
+        .append("symbol", symbol)
         .append("price", price)
         .append("qty", qty)
         .append("commission", commission)
