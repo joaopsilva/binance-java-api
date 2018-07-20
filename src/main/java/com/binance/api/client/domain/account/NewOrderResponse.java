@@ -41,6 +41,8 @@ public class NewOrderResponse {
 
   private String executedQty;
 
+  private String cummulativeQuoteQty;
+
   private OrderStatus status;
 
   private TimeInForce timeInForce;
@@ -110,6 +112,14 @@ public class NewOrderResponse {
 
   public void setExecutedQty(String executedQty) {
     this.executedQty = executedQty;
+  }
+
+  public String getCummulativeQuoteQty() {
+    return cummulativeQuoteQty;
+  }
+
+  public void setCummulativeQuoteQty(String cummulativeQuoteQty) {
+    this.cummulativeQuoteQty = cummulativeQuoteQty;
   }
 
   public OrderStatus getStatus() {
