@@ -1,5 +1,7 @@
 package com.binance.api.client.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Time in force to indicate how long an order will remain active before it is executed or expires.
  *
@@ -9,6 +11,7 @@ package com.binance.api.client.domain;
  *
  * @see <a href="http://www.investopedia.com/terms/t/timeinforce.asp">http://www.investopedia.com/terms/t/timeinforce.asp</a>
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public enum TimeInForce {
   GTC,
   IOC,

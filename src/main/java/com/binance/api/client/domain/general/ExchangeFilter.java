@@ -1,6 +1,7 @@
 package com.binance.api.client.domain.general;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * The MAX_ALGO_ORDERS filter defines the maximum number of "algo" orders an account is allowed to have open on the exchange. "Algo" orders are STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExchangeFilter {
 
   private FilterType filterType;
