@@ -25,7 +25,7 @@ public class OrderTradeUpdateEvent {
   private String eventType;
 
   @JsonProperty("E")
-  private long eventTime;
+  private Long eventTime;
 
   @JsonProperty("s")
   private String symbol;
@@ -137,11 +137,11 @@ public class OrderTradeUpdateEvent {
     this.eventType = eventType;
   }
 
-  public long getEventTime() {
+  public Long getEventTime() {
     return eventTime;
   }
 
-  public void setEventTime(long eventTime) {
+  public void setEventTime(Long eventTime) {
     this.eventTime = eventTime;
   }
 
@@ -225,7 +225,7 @@ public class OrderTradeUpdateEvent {
     this.orderRejectReason = orderRejectReason;
   }
 
-  public long getOrderId() {
+  public Long getOrderId() {
     return orderId;
   }
 
@@ -273,19 +273,19 @@ public class OrderTradeUpdateEvent {
     this.commissionAsset = commissionAsset;
   }
 
-  public long getOrderTradeTime() {
+  public Long getOrderTradeTime() {
     return orderTradeTime;
   }
 
-  public void setOrderTradeTime(long orderTradeTime) {
+  public void setOrderTradeTime(Long orderTradeTime) {
     this.orderTradeTime = orderTradeTime;
   }
 
-  public long getTradeId() {
+  public Long getTradeId() {
     return tradeId;
   }
 
-  public void setTradeId(long tradeId) {
+  public void setTradeId(Long tradeId) {
     this.tradeId = tradeId;
   }
 
