@@ -12,6 +12,7 @@ import com.binance.api.client.domain.account.WithdrawHistory;
 import com.binance.api.client.domain.account.WithdrawResult;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
+import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
@@ -197,7 +198,7 @@ public interface BinanceApiAsyncRestClient {
    * @param cancelOrderRequest order status request parameters
    * @param callback the callback that handles the response
    */
-  void cancelOrder(CancelOrderRequest cancelOrderRequest, BinanceApiCallback<Void> callback);
+  void cancelOrder(CancelOrderRequest cancelOrderRequest, BinanceApiCallback<CancelOrderResponse> callback);
 
   /**
    * Get all open orders on a symbol (asynchronous).
