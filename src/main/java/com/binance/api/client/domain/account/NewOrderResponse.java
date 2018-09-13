@@ -53,6 +53,7 @@ public class NewOrderResponse {
 
   private OrderSide side;
 
+  // @JsonSetter(nulls = Nulls.AS_EMPTY)
   private List<Trade> fills;
 
   /**
