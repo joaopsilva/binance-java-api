@@ -27,9 +27,9 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
     this.eventClass = eventClass;
   }
 
-  public BinanceApiWebSocketListener(BinanceApiCallback<T> callback) {
+  public BinanceApiWebSocketListener(BinanceApiCallback<T> callback, TypeReference<T> eventTypeReference) {
     this.callback = callback;
-    this.eventTypeReference = new TypeReference<T>() {};
+    this.eventTypeReference = eventTypeReference;
   }
 
   @Override
