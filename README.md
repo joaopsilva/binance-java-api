@@ -280,6 +280,9 @@ client.closeUserDataStream(listenKey);
 BinanceApiWebSocketClient client = BinanceApiClientFactory.newInstance().newWebSocketClient();
 ```
 
+User needs to be aware that REST symbols which are `upper case` differ from WebSocket symbols which must be `lower case`.
+In scenario of subscription with upper case styled symbol, server will return no error and subscribe to given channel - however, no events will be pushed.   
+
 #### Handling web socket errors
 
 Each of the methods on `BinanceApiWebSocketClient`, which opens a new web socket, takes a `BinanceApiCallback`, which is
@@ -430,6 +433,37 @@ client.onUserDataUpdateEvent(listenKey, response -> {
   }
 });
 ```
+
+#### Multi-channel subscription
+Client provides a way for user to subscribe to multiple channels using same websocket - to achieve that user needs to coma-separate symbols as it is in following examples.
+
+````java
+client.onAggTradeEvent("ethbtc,ethusdt", (AggTradeEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
+````java
+client.onDepthEvent("ethbtc,ethusdt", (DepthEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
+````java
+client.onCandlestickEvent("ethbtc,ethusdt", CandlestickInterval.ONE_MINUTE, (CandlestickEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
 
 ### Asynchronous requests
 

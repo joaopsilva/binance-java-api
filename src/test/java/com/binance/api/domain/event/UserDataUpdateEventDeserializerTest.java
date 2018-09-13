@@ -70,8 +70,8 @@ public class UserDataUpdateEventDeserializerTest {
       assertEquals(orderTradeUpdateEvent.getOrderStatus(), OrderStatus.CANCELED);
       assertEquals(orderTradeUpdateEvent.getOrderRejectReason(), OrderRejectReason.NONE);
 
-      assertEquals(orderTradeUpdateEvent.getOrderId(), 123456L);
-      assertEquals(orderTradeUpdateEvent.getOrderTradeTime(), 1L);
+      assertEquals(orderTradeUpdateEvent.getOrderId(), new Long(123456));
+      assertEquals(orderTradeUpdateEvent.getOrderTradeTime(), new Long(1));
     } catch (IOException e) {
       fail();
     }
