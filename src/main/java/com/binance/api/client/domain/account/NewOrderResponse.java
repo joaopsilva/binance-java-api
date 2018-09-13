@@ -8,7 +8,9 @@ import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -176,7 +178,10 @@ public class NewOrderResponse {
         .append("timeInForce", timeInForce)
         .append("type", type)
         .append("side", side)
-        .append("fills", fills.stream().map(Object::toString).collect(Collectors.joining(", ")))
+        .append("fills", Optional.ofNullable(fills).orElse(Collections.emptyList())
+            .stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(", ")))
         .toString();
   }
 }
