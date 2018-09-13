@@ -9,7 +9,7 @@
   <version>1.0.0</version>
 
   <properties>
-    <com.squareup.retrofit2.version>2.3.0</com.squareup.retrofit2.version>
+    <com.squareup.retrofit2.version>2.4.0</com.squareup.retrofit2.version>
   </properties>
 
   <dependencies>
