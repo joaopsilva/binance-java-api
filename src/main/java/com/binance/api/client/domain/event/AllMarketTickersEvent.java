@@ -37,6 +37,12 @@ public class AllMarketTickersEvent {
   @JsonProperty("Q")
   private String closeTradesQuantity;
 
+  @JsonProperty("b")
+  private String bestBidPrice;
+
+  @JsonProperty("B")
+  private String bestBidQuantity;
+
   @JsonProperty("a")
   private String bestAskPrice;
 
@@ -143,6 +149,22 @@ public class AllMarketTickersEvent {
 
   public void setCloseTradesQuantity(String closeTradesQuantity) {
     this.closeTradesQuantity = closeTradesQuantity;
+  }
+
+  public String getBestBidPrice() {
+    return bestBidPrice;
+  }
+
+  public void setBestBidPrice(String bestBidPrice) {
+    this.bestBidPrice = bestBidPrice;
+  }
+
+  public String getBestBidQuantity() {
+    return bestBidQuantity;
+  }
+
+  public void setBestBidQuantity(String bestBidQuantity) {
+    this.bestBidQuantity = bestBidQuantity;
   }
 
   public String getBestAskPrice() {
@@ -253,6 +275,8 @@ public class AllMarketTickersEvent {
             .append("previousDaysClosePrice", previousDaysClosePrice)
             .append("currentDaysClosePrice", currentDaysClosePrice)
             .append("closeTradesQuantity", closeTradesQuantity)
+            .append("bestBidPrice", bestBidPrice)
+            .append("bestBidQuantity", bestBidQuantity)
             .append("bestAskPrice", bestAskPrice)
             .append("bestAskQuantity", bestAskQuantity)
             .append("openPrice", openPrice)
