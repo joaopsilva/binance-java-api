@@ -16,6 +16,8 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
 
   private BinanceApiCallback<T> callback;
 
+  private static final ObjectMapper mapper = new ObjectMapper();
+
   private Class<T> eventClass;
 
   private TypeReference<T> eventTypeReference;
@@ -34,7 +36,6 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
 
   @Override
   public void onMessage(WebSocket webSocket, String text) {
-    ObjectMapper mapper = new ObjectMapper();
     try {
       T event = null;
       if (eventClass == null) {
