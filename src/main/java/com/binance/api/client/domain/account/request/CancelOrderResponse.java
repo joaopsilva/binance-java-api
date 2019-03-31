@@ -20,6 +20,9 @@ public class CancelOrderResponse {
 
   private String clientOrderId;
 
+  private String status;
+  private String executedQty;
+
   public String getSymbol() {
     return symbol;
   }
@@ -38,10 +41,16 @@ public class CancelOrderResponse {
     return this;
   }
 
+  public String getStatus() {
+    return status;
+  }
+  public String getExecutedQty() {
+    return executedQty;
+  }
+
   public String getOrderId() {
     return orderId;
   }
-
   public CancelOrderResponse setOrderId(String orderId) {
     this.orderId = orderId;
     return this;
