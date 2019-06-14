@@ -7,6 +7,12 @@
   <groupId>com.binance.api</groupId>
   <artifactId>binance-api-client</artifactId>
   <version>1.0.0</version>
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
 
   <properties>
     <com.squareup.retrofit2.version>2.4.0</com.squareup.retrofit2.version>
