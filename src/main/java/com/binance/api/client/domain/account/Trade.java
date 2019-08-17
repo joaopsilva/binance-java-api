@@ -27,6 +27,12 @@ public class Trade {
    */
   private String qty;
 
+
+  /**
+   * Quote quantity for the trade (price * qty).
+   */
+  private String quoteQty;
+
   /**
    * Commission.
    */
@@ -88,6 +94,14 @@ public class Trade {
 
   public void setQty(String qty) {
     this.qty = qty;
+  }
+
+  public String getQuoteQty() {
+    return quoteQty;
+  }
+
+  public void setQuoteQty(String quoteQty) {
+    this.quoteQty = quoteQty;
   }
 
   public String getCommission() {
@@ -161,6 +175,7 @@ public class Trade {
         .append("symbol", symbol)
         .append("price", price)
         .append("qty", qty)
+        .append("quoteQty", quoteQty)
         .append("commission", commission)
         .append("commissionAsset", commissionAsset)
         .append("time", time)

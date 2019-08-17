@@ -17,7 +17,7 @@ public class AccountEndpointsExample {
     BinanceApiRestClient client = factory.newRestClient();
 
     // Get account balances
-    Account account = client.getAccount(6000000L, System.currentTimeMillis());
+    Account account = client.getAccount(60_000L, System.currentTimeMillis());
     System.out.println(account.getBalances());
     System.out.println(account.getAssetBalance("ETH"));
 

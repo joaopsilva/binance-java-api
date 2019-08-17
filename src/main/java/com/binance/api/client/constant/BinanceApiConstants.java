@@ -42,7 +42,7 @@ public class BinanceApiConstants {
   /**
    * Default receiving window.
    */
-  public static final long DEFAULT_RECEIVING_WINDOW = 6_000_000L;
+  public static final long DEFAULT_RECEIVING_WINDOW = 60_000L;
   
   /**
    * Default ToStringStyle used by toString methods. 
