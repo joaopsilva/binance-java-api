@@ -9,7 +9,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * User data update event which can be of two types:
  *
  * 1) outboundAccountInfo, whenever there is a change in the account (e.g. balance of an asset)
- * 2) executionReport, whenever there is a trade or an order
+ * 2) outboundAccountPosition, the change in account balances caused by an event.
+ * 3) executionReport, whenever there is a trade or an order
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(using = UserDataUpdateEventDeserializer.class)
@@ -62,6 +63,8 @@ public class UserDataUpdateEvent {
         .append("eventTime", eventTime);
     if (eventType == UserDataUpdateEventType.ACCOUNT_UPDATE) {
       sb.append("accountUpdateEvent", accountUpdateEvent);
+    } else if (eventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
+        sb.append("accountPositionUpdateEvent", accountUpdateEvent);
     } else {
       sb.append("orderTradeUpdateEvent", orderTradeUpdateEvent);
     }
@@ -70,6 +73,7 @@ public class UserDataUpdateEvent {
 
   public enum UserDataUpdateEventType {
     ACCOUNT_UPDATE("outboundAccountInfo"),
+    ACCOUNT_POSITION_UPDATE("outboundAccountPosition"),
     ORDER_TRADE_UPDATE("executionReport");
 
     private final String eventTypeId;
@@ -87,6 +91,8 @@ public class UserDataUpdateEvent {
         return ACCOUNT_UPDATE;
       } else if (ORDER_TRADE_UPDATE.eventTypeId.equals(eventTypeId)) {
         return ORDER_TRADE_UPDATE;
+      } else if (ACCOUNT_POSITION_UPDATE.eventTypeId.equals(eventTypeId)) {
+        return ACCOUNT_POSITION_UPDATE;
       }
       throw new IllegalArgumentException("Unrecognized user data update event type id: " + eventTypeId);
     }
