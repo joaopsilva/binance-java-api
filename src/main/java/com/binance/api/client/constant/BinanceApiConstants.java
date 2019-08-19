@@ -1,5 +1,7 @@
 package com.binance.api.client.constant;
 
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Constants used throughout Binance's API.
  */
@@ -14,6 +16,11 @@ public class BinanceApiConstants {
    * Streaming API base URL.
    */
   public static final String WS_API_BASE_URL = "wss://stream.binance.com:9443/ws";
+
+  /**
+   * Asset info base URL.
+   */
+  public static final String ASSET_INFO_API_BASE_URL = "https://www.binance.com/";
 
   /**
    * HTTP Header to be used for API-KEY authentication.
@@ -35,5 +42,12 @@ public class BinanceApiConstants {
   /**
    * Default receiving window.
    */
-  public static final long DEFAULT_RECEIVING_WINDOW = 6_000_000L;
+  public static final long DEFAULT_RECEIVING_WINDOW = 60_000L;
+  
+  /**
+   * Default ToStringStyle used by toString methods. 
+   * Override this to change the output format of the overridden toString methods. 
+   *  - Example ToStringStyle.JSON_STYLE
+   */
+  public static ToStringStyle TO_STRING_BUILDER_STYLE = ToStringStyle.SHORT_PREFIX_STYLE;
 }

@@ -2,7 +2,6 @@ package com.binance.api.examples;
 
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiClientFactory;
-import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
@@ -33,7 +32,7 @@ public class OrdersExampleAsync {
 
     // Canceling an order
     client.cancelOrder(new CancelOrderRequest("LINKETH", 756703L),
-        response -> System.out.println("Order has been canceled."));
+        response -> System.out.println(response));
 
     // Placing a test LIMIT order
     client.newOrderTest(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001"),

@@ -1,9 +1,12 @@
 package com.binance.api.client.domain.market;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Kline/Candlestick intervals.
  * m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public enum CandlestickInterval {
   ONE_MINUTE("1m"),
   THREE_MINUTES("3m"),
@@ -12,7 +15,7 @@ public enum CandlestickInterval {
   HALF_HOURLY("30m"),
   HOURLY("1h"),
   TWO_HOURLY("2h"),
-  FOUR_HORLY("4h"),
+  FOUR_HOURLY("4h"),
   SIX_HOURLY("6h"),
   EIGHT_HOURLY("8h"),
   TWELVE_HOURLY("12h"),

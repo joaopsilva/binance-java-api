@@ -4,9 +4,11 @@ import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.NewOrderResponse;
+import com.binance.api.client.domain.account.NewOrderResponseType;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
+import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.exception.BinanceApiException;
@@ -39,7 +41,8 @@ public class OrdersExample {
 
     // Canceling an order
     try {
-      client.cancelOrder(new CancelOrderRequest("LINKETH", 756762l));
+      CancelOrderResponse cancelOrderResponse = client.cancelOrder(new CancelOrderRequest("LINKETH", 756762l));
+      System.out.println(cancelOrderResponse);
     } catch (BinanceApiException e) {
       System.out.println(e.getError().getMsg());
     }
@@ -51,7 +54,7 @@ public class OrdersExample {
     client.newOrderTest(marketBuy("LINKETH", "1000"));
 
     // Placing a real LIMIT order
-    NewOrderResponse newOrderResponse = client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001"));
+    NewOrderResponse newOrderResponse = client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001").newOrderRespType(NewOrderResponseType.FULL));
     System.out.println(newOrderResponse);
   }
 

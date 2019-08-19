@@ -1,7 +1,7 @@
 package com.binance.api.client.domain.account.request;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * A specialized order request with additional filters.
@@ -42,7 +42,7 @@ public class OrderStatusRequest extends OrderRequest {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("orderId", orderId)
         .append("origClientOrderId", origClientOrderId)
         .toString();

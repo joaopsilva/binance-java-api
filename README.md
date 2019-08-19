@@ -188,7 +188,8 @@ System.out.println(order.getExecutedQty());
 
 #### Placing a MARKET order
 ```java
-NewOrderResponse newOrderResponse = client.newOrder(marketBuy("LINKETH", "1000"));
+NewOrderResponse newOrderResponse = client.newOrder(marketBuy("LINKETH", "1000").orderRespType(OrderResponseType.FULL));
+List<Trade> fills = newOrderResponse.getFills();
 System.out.println(newOrderResponse.getClientOrderId());
 ```
 <details>
@@ -279,6 +280,43 @@ client.closeUserDataStream(listenKey);
 #### Initialize the WebSocket client
 ```java
 BinanceApiWebSocketClient client = BinanceApiClientFactory.newInstance().newWebSocketClient();
+```
+
+User needs to be aware that REST symbols which are `upper case` differ from WebSocket symbols which must be `lower case`.
+In scenario of subscription with upper case styled symbol, server will return no error and subscribe to given channel - however, no events will be pushed.   
+
+#### Handling web socket errors
+
+Each of the methods on `BinanceApiWebSocketClient`, which opens a new web socket, takes a `BinanceApiCallback`, which is
+called for each event received from the Binance servers. 
+
+The `BinanceApiCallback` interface also has a `onFailure(Throwable)` method, which, optionally, can be implemented to 
+receive notifications if the web-socket fails, e.g. disconnection.   
+
+```java
+client.onAggTradeEvent(symbol.toLowerCase(), new BinanceApiCallback<AggTradeEvent>() {
+    @Override
+    public void onResponse(final AggTradeEvent response) {
+        System.out.println(response);
+    }
+
+    @Override
+    public void onFailure(final Throwable cause) {
+        System.err.println("Web socket failed");
+        cause.printStackTrace(System.err);
+    }
+});
+```
+
+#### Closing web sockets
+
+Each of the methods on `BinanceApiWebSocketClient`, which opens a new web socket, also returns a `Closeable`.
+This `Closeable` can be used to close the underlying web socket and free any associated resources, e.g.
+
+```java
+Closable ws = client.onAggTradeEvent("ethbtc", someCallback);
+// some time later...
+ws.close();
 ```
 
 #### Listen for aggregated trade events for ETH/BTC
@@ -397,6 +435,37 @@ client.onUserDataUpdateEvent(listenKey, response -> {
   }
 });
 ```
+
+#### Multi-channel subscription
+Client provides a way for user to subscribe to multiple channels using same websocket - to achieve that user needs to coma-separate symbols as it is in following examples.
+
+````java
+client.onAggTradeEvent("ethbtc,ethusdt", (AggTradeEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
+````java
+client.onDepthEvent("ethbtc,ethusdt", (DepthEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
+````java
+client.onCandlestickEvent("ethbtc,ethusdt", CandlestickInterval.ONE_MINUTE, (CandlestickEvent response) -> {
+  if (Objects.equals(response.getSymbol(),"ethbtc")) {
+      // handle ethbtc event
+  } else if(Objects.equals(response.getSymbol()),"ethusdt")) {
+      // handle ethusdt event
+  }
+});
+````
 
 ### Asynchronous requests
 

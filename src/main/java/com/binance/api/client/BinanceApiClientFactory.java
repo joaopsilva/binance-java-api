@@ -4,6 +4,8 @@ import com.binance.api.client.impl.BinanceApiAsyncRestClientImpl;
 import com.binance.api.client.impl.BinanceApiRestClientImpl;
 import com.binance.api.client.impl.BinanceApiWebSocketClientImpl;
 
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.getSharedClient;
+
 /**
  * A factory for creating BinanceApi client objects.
  */
@@ -68,6 +70,6 @@ public class BinanceApiClientFactory {
    * Creates a new web socket client used for handling data streams.
    */
   public BinanceApiWebSocketClient newWebSocketClient() {
-    return new BinanceApiWebSocketClientImpl();
+    return new BinanceApiWebSocketClientImpl(getSharedClient());
   }
 }

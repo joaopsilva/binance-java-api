@@ -17,8 +17,15 @@ import java.io.IOException;
  */
 public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUpdateEvent> {
 
+  private ObjectMapper mapper;
+
   @Override
   public UserDataUpdateEvent deserialize(JsonParser jp, DeserializationContext ctx) throws IOException {
+
+    if (mapper == null){
+      mapper = new ObjectMapper();
+    }
+
     ObjectCodec oc = jp.getCodec();
     JsonNode node = oc.readTree(jp);
     String json = node.toString();
@@ -31,19 +38,19 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
     userDataUpdateEvent.setEventType(userDataUpdateEventType);
     userDataUpdateEvent.setEventTime(eventTime);
 
-    if (userDataUpdateEventType == UserDataUpdateEventType.ACCOUNT_UPDATE) {
-      AccountUpdateEvent accountUpdateEvent = getUserDataUpdateEventDetail(json, AccountUpdateEvent.class);
+    if (userDataUpdateEventType == UserDataUpdateEventType.ACCOUNT_UPDATE ||
+        userDataUpdateEventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
+      AccountUpdateEvent accountUpdateEvent = getUserDataUpdateEventDetail(json, AccountUpdateEvent.class, mapper);
       userDataUpdateEvent.setAccountUpdateEvent(accountUpdateEvent);
     } else { // userDataUpdateEventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE
-      OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class);
+      OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class, mapper);
       userDataUpdateEvent.setOrderTradeUpdateEvent(orderTradeUpdateEvent);
     }
 
     return userDataUpdateEvent;
   }
 
-  public <T> T getUserDataUpdateEventDetail(String json, Class<T> clazz) {
-    ObjectMapper mapper = new ObjectMapper();
+  public <T> T getUserDataUpdateEventDetail(String json, Class<T> clazz, ObjectMapper mapper) {
     try {
       return mapper.readValue(json, clazz);
     } catch (IOException e) {

@@ -1,18 +1,17 @@
 package com.binance.api.client.domain.account;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderStatus;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.math.BigDecimal;
 
 /**
  * Trade order information.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
   /**
@@ -79,6 +78,11 @@ public class Order {
    * Order timestamp.
    */
   private long time;
+  
+  /**
+  * Used to calculate the average price 
+  */
+  private String cummulativeQuoteQty;
 
   public String getSymbol() {
     return symbol;
@@ -183,10 +187,18 @@ public class Order {
   public void setTime(long time) {
     this.time = time;
   }
+  
+  public String getCummulativeQuoteQty() {
+    return cummulativeQuoteQty;
+  }
+
+  public void setCummulativeQuoteQty(String cummulativeQuoteQty) {
+     this.cummulativeQuoteQty = cummulativeQuoteQty;
+  }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("symbol", symbol)
         .append("orderId", orderId)
         .append("clientOrderId", clientOrderId)
@@ -200,6 +212,7 @@ public class Order {
         .append("stopPrice", stopPrice)
         .append("icebergQty", icebergQty)
         .append("time", time)
+        .append("cummulativeQuoteQty", cummulativeQuoteQty)
         .toString();
   }
 }

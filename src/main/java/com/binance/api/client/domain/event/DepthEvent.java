@@ -1,10 +1,10 @@
 package com.binance.api.client.domain.event;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.market.OrderBookEntry;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
@@ -23,11 +23,14 @@ public class DepthEvent {
   @JsonProperty("s")
   private String symbol;
 
+  @JsonProperty("U")
+  private long firstUpdateId;
+
   /**
    * updateId to sync up with updateid in /api/v1/depth
    */
   @JsonProperty("u")
-  private long updateId;
+  private long finalUpdateId;
 
   /**
    * Bid depth delta.
@@ -65,12 +68,36 @@ public class DepthEvent {
     this.symbol = symbol;
   }
 
-  public long getUpdateId() {
-    return updateId;
+  public long getFirstUpdateId() {
+    return firstUpdateId;
   }
 
+  public void setFirstUpdateId(final long firstUpdateId) {
+    this.firstUpdateId = firstUpdateId;
+  }
+
+  public long getFinalUpdateId() {
+    return finalUpdateId;
+  }
+
+  public void setFinalUpdateId(long finalUpdateId) {
+    this.finalUpdateId = finalUpdateId;
+  }
+
+  /**
+   * @deprecated Use {@link #getFinalUpdateId}
+   */
+  @Deprecated
+  public long getUpdateId() {
+    return finalUpdateId;
+  }
+
+  /**
+   * @deprecated Use {@link #setFinalUpdateId}
+   */
+  @Deprecated
   public void setUpdateId(long updateId) {
-    this.updateId = updateId;
+    this.finalUpdateId = updateId;
   }
 
   public List<OrderBookEntry> getBids() {
@@ -91,11 +118,12 @@ public class DepthEvent {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("eventType", eventType)
         .append("eventTime", eventTime)
         .append("symbol", symbol)
-        .append("updateId", updateId)
+        .append("firstUpdateId", firstUpdateId)
+        .append("finalUpdateId", finalUpdateId)
         .append("bids", bids)
         .append("asks", asks)
         .toString();
