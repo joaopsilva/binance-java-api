@@ -16,6 +16,7 @@
 
   <properties>
     <com.squareup.retrofit2.version>2.4.0</com.squareup.retrofit2.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -55,6 +56,7 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+		  <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>
