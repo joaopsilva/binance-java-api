@@ -23,6 +23,10 @@ public class UserDataUpdateEvent {
 
   private OrderTradeUpdateEvent orderTradeUpdateEvent;
 
+  private OutboundAccountPositionEvent outboundAccountPositionEvent;
+
+  private ListStatusEvent listStatusEvent;
+
   public UserDataUpdateEventType getEventType() {
     return eventType;
   }
@@ -55,22 +59,44 @@ public class UserDataUpdateEvent {
     this.orderTradeUpdateEvent = orderTradeUpdateEvent;
   }
 
+  public OutboundAccountPositionEvent getOutboundAccountPositionEvent() {
+    return outboundAccountPositionEvent;
+  }
+
+  public void setOutboundAccountPositionEvent(OutboundAccountPositionEvent outboundAccountPositionEvent) {
+    this.outboundAccountPositionEvent = outboundAccountPositionEvent;
+  }
+
+  public ListStatusEvent getListStatusEvent() {
+    return listStatusEvent;
+  }
+
+  public void setListStatusEvent(ListStatusEvent listStatusEvent) {
+    this.listStatusEvent = listStatusEvent;
+  }
+
   @Override
   public String toString() {
     ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-        .append("eventType", eventType)
-        .append("eventTime", eventTime);
+            .append("eventType", eventType)
+            .append("eventTime", eventTime);
     if (eventType == UserDataUpdateEventType.ACCOUNT_UPDATE) {
       sb.append("accountUpdateEvent", accountUpdateEvent);
-    } else {
+    } else if (eventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE) {
       sb.append("orderTradeUpdateEvent", orderTradeUpdateEvent);
+    } else if (eventType == UserDataUpdateEventType.OUTBOUND_ACCOUNT_POSITION) {
+      sb.append("outboundAccountPositionEvent", outboundAccountPositionEvent);
+    } else if (eventType == UserDataUpdateEventType.LIST_STATUS) {
+      sb.append("listStatusEvent", listStatusEvent);
     }
     return sb.toString();
   }
 
   public enum UserDataUpdateEventType {
     ACCOUNT_UPDATE("outboundAccountInfo"),
-    ORDER_TRADE_UPDATE("executionReport");
+    ORDER_TRADE_UPDATE("executionReport"),
+    OUTBOUND_ACCOUNT_POSITION("outboundAccountPosition"),
+    LIST_STATUS("listStatus");
 
     private final String eventTypeId;
 
@@ -87,7 +113,12 @@ public class UserDataUpdateEvent {
         return ACCOUNT_UPDATE;
       } else if (ORDER_TRADE_UPDATE.eventTypeId.equals(eventTypeId)) {
         return ORDER_TRADE_UPDATE;
+      } else if (OUTBOUND_ACCOUNT_POSITION.eventTypeId.equals(eventTypeId)) {
+        return OUTBOUND_ACCOUNT_POSITION;
+      } else if (LIST_STATUS.eventTypeId.equals(eventTypeId)) {
+        return LIST_STATUS;
       }
+
       throw new IllegalArgumentException("Unrecognized user data update event type id: " + eventTypeId);
     }
   }
