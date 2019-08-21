@@ -24,25 +24,36 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
     String json = node.toString();
 
     final String eventTypeId = node.get("e").asText();
-    final Long eventTime = node.get("E").asLong();
+    final long eventTime = node.get("E").asLong();
     UserDataUpdateEventType userDataUpdateEventType = UserDataUpdateEventType.fromEventTypeId(eventTypeId);
 
     UserDataUpdateEvent userDataUpdateEvent = new UserDataUpdateEvent();
     userDataUpdateEvent.setEventType(userDataUpdateEventType);
     userDataUpdateEvent.setEventTime(eventTime);
 
-    if (userDataUpdateEventType == UserDataUpdateEventType.ACCOUNT_UPDATE) {
-      AccountUpdateEvent accountUpdateEvent = getUserDataUpdateEventDetail(json, AccountUpdateEvent.class);
-      userDataUpdateEvent.setAccountUpdateEvent(accountUpdateEvent);
-    } else { // userDataUpdateEventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE
-      OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class);
-      userDataUpdateEvent.setOrderTradeUpdateEvent(orderTradeUpdateEvent);
+    switch (userDataUpdateEventType) {
+      case ACCOUNT_UPDATE:
+        AccountUpdateEvent accountUpdateEvent = getUserDataUpdateEventDetail(json, AccountUpdateEvent.class);
+        userDataUpdateEvent.setAccountUpdateEvent(accountUpdateEvent);
+        break;
+      case ORDER_TRADE_UPDATE:
+        OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class);
+        userDataUpdateEvent.setOrderTradeUpdateEvent(orderTradeUpdateEvent);
+        break;
+      case OUTBOUND_ACCOUNT_POSITION:
+        OutboundAccountPositionEvent outboundAccountPositionEvent = getUserDataUpdateEventDetail(json, OutboundAccountPositionEvent.class);
+        userDataUpdateEvent.setOutboundAccountPositionEvent(outboundAccountPositionEvent);
+        break;
+      case LIST_STATUS:
+        ListStatusEvent listStatusEvent = getUserDataUpdateEventDetail(json, ListStatusEvent.class);
+        userDataUpdateEvent.setListStatusEvent(listStatusEvent);
+        break;
     }
 
     return userDataUpdateEvent;
   }
 
-  public <T> T getUserDataUpdateEventDetail(String json, Class<T> clazz) {
+  private <T> T getUserDataUpdateEventDetail(String json, Class<T> clazz) {
     ObjectMapper mapper = new ObjectMapper();
     try {
       return mapper.readValue(json, clazz);
