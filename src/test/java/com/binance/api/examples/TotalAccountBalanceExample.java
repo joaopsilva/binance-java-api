@@ -6,7 +6,9 @@ import com.binance.api.client.constant.Util;
 import com.binance.api.client.domain.account.Account;
 import com.binance.api.client.domain.account.AssetBalance;
 
-
+/**
+ * Example how to get total of balances on your account
+ */
 public class TotalAccountBalanceExample {
 
 
@@ -20,10 +22,9 @@ public class TotalAccountBalanceExample {
         // Get total account balance in BTC (spot only)
         TotalAccountBalanceExample accountBalance = new TotalAccountBalanceExample();
         double totalBalanceInBTC = accountBalance.getTotalAccountBalance(client,account);
+        System.out.println(totalBalanceInBTC);
         // Get total account balance in USDT (spot only)
         double totalBalanceInUSDT = totalBalanceInBTC * Double.parseDouble(client.getPrice("BTCUSDT").getPrice());
-
-        System.out.println(totalBalanceInBTC);
         System.out.println(totalBalanceInUSDT);
 
 
@@ -38,10 +39,10 @@ public class TotalAccountBalanceExample {
             double free = Double.parseDouble(balance.getFree());
             double locked = Double.parseDouble(balance.getLocked());
             String ticker = balance.getAsset() + Util.BTC_TICKER;
-            String tickerRev = Util.BTC_TICKER + balance.getAsset();
+            String tickerReverse = Util.BTC_TICKER + balance.getAsset();
             if (free + locked != 0) {
                 if (Util.isFiatCurrency(balance.getAsset())) {
-                    double price = Double.parseDouble(client.getPrice(tickerRev).getPrice());
+                    double price = Double.parseDouble(client.getPrice(tickerReverse).getPrice());
                     double amount = (free + locked) / price;
                     totalBalance += amount;
                 } else {
