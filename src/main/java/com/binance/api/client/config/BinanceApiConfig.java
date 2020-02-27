@@ -11,11 +11,6 @@ public class BinanceApiConfig {
 	private static String BASE_DOMAIN = "binance.com";
 
 	/**
-	 * Default receiving window.
-	 */
-	private static long DEFAULT_RECEIVING_WINDOW = 6_000_000L;
-
-	/**
 	 * Set the URL base domain name (e.g., binance.com).
 	 *
 	 * @param baseDomain Base domain name
