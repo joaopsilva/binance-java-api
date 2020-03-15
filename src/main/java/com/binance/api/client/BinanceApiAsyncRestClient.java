@@ -30,7 +30,7 @@ import com.binance.api.client.domain.market.TickerStatistics;
 import java.util.List;
 
 /**
- * Binance API façade, supporting asynchronous/non-blocking access Binance's REST API.
+ * Binance API facade, supporting asynchronous/non-blocking access Binance's REST API.
  */
 public interface BinanceApiAsyncRestClient {
 
