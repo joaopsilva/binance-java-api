@@ -12,7 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Custom deserializer for a User Data stream event, since the API can return two different responses in this stream.
+ * Custom deserializer for a User Data stream event, since the API can return four different responses in this stream.
+ *
  * @see UserDataUpdateEvent
  */
 public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUpdateEvent> {
@@ -22,7 +23,7 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
   @Override
   public UserDataUpdateEvent deserialize(JsonParser jp, DeserializationContext ctx) throws IOException {
 
-    if (mapper == null){
+    if (mapper == null) {
       mapper = new ObjectMapper();
     }
 
@@ -42,6 +43,9 @@ public class UserDataUpdateEventDeserializer extends JsonDeserializer<UserDataUp
         userDataUpdateEventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
       AccountUpdateEvent accountUpdateEvent = getUserDataUpdateEventDetail(json, AccountUpdateEvent.class, mapper);
       userDataUpdateEvent.setAccountUpdateEvent(accountUpdateEvent);
+    } else if (userDataUpdateEventType == UserDataUpdateEventType.BALANCE_UPDATE) {
+      BalanceUpdateEvent balanceUpdateEvent = getUserDataUpdateEventDetail(json, BalanceUpdateEvent.class, mapper);
+      userDataUpdateEvent.setBalanceUpdateEvent(balanceUpdateEvent);
     } else { // userDataUpdateEventType == UserDataUpdateEventType.ORDER_TRADE_UPDATE
       OrderTradeUpdateEvent orderTradeUpdateEvent = getUserDataUpdateEventDetail(json, OrderTradeUpdateEvent.class, mapper);
       userDataUpdateEvent.setOrderTradeUpdateEvent(orderTradeUpdateEvent);
