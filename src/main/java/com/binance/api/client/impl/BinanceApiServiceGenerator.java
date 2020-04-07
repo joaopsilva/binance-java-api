@@ -1,6 +1,7 @@
 package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiError;
+import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.exception.BinanceApiException;
 import com.binance.api.client.security.AuthenticationInterceptor;
@@ -48,7 +49,7 @@ public class BinanceApiServiceGenerator {
 
     public static <S> S createService(Class<S> serviceClass, String apiKey, String secret) {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(BinanceApiConstants.API_BASE_URL)
+                .baseUrl(BinanceApiConfig.getApiBaseUrl())
                 .addConverterFactory(converterFactory);
 
         if (StringUtils.isEmpty(apiKey) || StringUtils.isEmpty(secret)) {

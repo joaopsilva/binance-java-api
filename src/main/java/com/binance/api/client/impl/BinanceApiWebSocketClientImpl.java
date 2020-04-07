@@ -2,6 +2,7 @@ package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.event.AggTradeEvent;
 import com.binance.api.client.domain.event.AllMarketTickersEvent;
@@ -73,7 +74,7 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
     public void close() { }
 
     private Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
-        String streamingUrl = String.format("%s/%s", BinanceApiConstants.WS_API_BASE_URL, channel);
+        String streamingUrl = String.format("%s/%s", BinanceApiConfig.getStreamApiBaseUrl(), channel);
         Request request = new Request.Builder().url(streamingUrl).build();
         final WebSocket webSocket = client.newWebSocket(request, listener);
         return () -> {
