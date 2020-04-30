@@ -4,16 +4,7 @@ import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.NewOrderResponseType;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.Asset;
@@ -177,4 +168,62 @@ public interface BinanceApiService {
   @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
   @DELETE("/api/v1/userDataStream")
   Call<Void> closeAliveUserDataStream(@Query("listenKey") String listenKey);
+
+  // Margin Account endpoints
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @POST("/sapi/v1/margin/transfer")
+  Call<MarginTransaction> transfer(@Query("asset") String asset, @Query("amount") String amount, @Query("type") String type, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @POST("/sapi/v1/margin/loan")
+  Call<MarginTransaction> borrow(@Query("asset") String asset, @Query("amount") String amount, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @GET("/sapi/v1/margin/loan")
+  Call<LoanQueryResult> queryLoan(@Query("asset") String asset, @Query("txId") String txId, @Query("timestamp") Long timestamp);
+
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @POST("/sapi/v1/margin/repay")
+  Call<MarginTransaction> repay(@Query("asset") String asset, @Query("amount") String amount, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @GET("/sapi/v1/margin/account")
+  Call<MarginAccount> getMarginAccount(@Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+  @GET("/sapi/v1/margin/openOrders")
+  Call<List<Order>> getOpenMarginOrders(@Query("symbol") String symbol, @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+  @POST("/sapi/v1/margin/order")
+  Call<NewOrderResponse> newMarginOrder(@Query("symbol") String symbol, @Query("side") OrderSide side, @Query("type") OrderType type,
+                                        @Query("timeInForce") TimeInForce timeInForce, @Query("quantity") String quantity, @Query("price") String price,
+                                        @Query("newClientOrderId") String newClientOrderId, @Query("stopPrice") String stopPrice,
+                                        @Query("icebergQty") String icebergQty, @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
+                                        @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+  @DELETE("/sapi/v1/margin/order")
+  Call<CancelOrderResponse> cancelMarginOrder(@Query("symbol") String symbol, @Query("orderId") Long orderId,
+                                              @Query("origClientOrderId") String origClientOrderId, @Query("newClientOrderId") String newClientOrderId,
+                                              @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+  @GET("/sapi/v1/margin/order")
+  Call<Order> getMarginOrderStatus(@Query("symbol") String symbol, @Query("orderId") Long orderId,
+                                   @Query("origClientOrderId") String origClientOrderId, @Query("recvWindow") Long recvWindow,
+                                   @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+  @GET("/sapi/v1/margin/myTrades")
+  Call<List<Trade>> getMyMarginTrades(@Query("symbol") String symbol, @Query("limit") Integer limit, @Query("fromId") Long fromId,
+                                      @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+  @POST("/sapi/v1/userDataStream")
+  Call<ListenKey> startMarginUserDataStream();
+
+  @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+  @PUT("/sapi/v1/userDataStream")
+  Call<Void> keepAliveMarginUserDataStream(@Query("listenKey") String listenKey);
 }
