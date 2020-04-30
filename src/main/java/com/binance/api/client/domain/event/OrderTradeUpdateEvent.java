@@ -1,19 +1,14 @@
 package com.binance.api.client.domain.event;
 
 import com.binance.api.client.constant.BinanceApiConstants;
-import com.binance.api.client.domain.ExecutionType;
-import com.binance.api.client.domain.OrderRejectReason;
-import com.binance.api.client.domain.OrderSide;
-import com.binance.api.client.domain.OrderStatus;
-import com.binance.api.client.domain.OrderType;
-import com.binance.api.client.domain.TimeInForce;
+import com.binance.api.client.domain.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Order or trade report update event.
- *
+ * <p>
  * This event is embedded as part of a user data update event.
  *
  * @see UserDataUpdateEvent
@@ -128,6 +123,30 @@ public class OrderTradeUpdateEvent {
    */
   @JsonProperty("t")
   private Long tradeId;
+
+  /**
+   * Order creation time.
+   */
+  @JsonProperty("O")
+  private Long orderCreationTime;
+
+  /**
+   * Cumulative quote asset transacted quantity.
+   */
+  @JsonProperty("Z")
+  private String cumulativeQuoteQty;
+
+  /**
+   * Last quote asset transacted quantity (i.e. lastPrice * lastQty).
+   */
+  @JsonProperty("Y")
+  private String lastQuoteQty;
+
+  /**
+   * Quote Order Qty.
+   */
+  @JsonProperty("Q")
+  private String quoteOrderQty;
 
   public String getEventType() {
     return eventType;
@@ -289,6 +308,37 @@ public class OrderTradeUpdateEvent {
     this.tradeId = tradeId;
   }
 
+  public Long getOrderCreationTime() {
+    return orderCreationTime;
+  }
+
+  public void setOrderCreationTime(Long orderCreationTime) {
+    this.orderCreationTime = orderCreationTime;
+  }
+
+  public String getCumulativeQuoteQty() {
+    return cumulativeQuoteQty;
+  }
+
+  public void setCumulativeQuoteQty(String cumulativeQuoteQty) {
+    this.cumulativeQuoteQty = cumulativeQuoteQty;
+  }
+
+  public String getLastQuoteQty() {
+    return lastQuoteQty;
+  }
+
+  public void setLastQuoteQty(String lastQuoteQty) {
+    this.lastQuoteQty = lastQuoteQty;
+  }
+
+  public String getQuoteOrderQty() {
+    return quoteOrderQty;
+  }
+
+  public void setQuoteOrderQty(String quoteOrderQty) {
+    this.quoteOrderQty = quoteOrderQty;
+  }
 
   @Override
   public String toString() {
@@ -313,6 +363,10 @@ public class OrderTradeUpdateEvent {
         .append("commissionAsset", commissionAsset)
         .append("orderTradeTime", orderTradeTime)
         .append("tradeId", tradeId)
+        .append("orderCreationTime", orderCreationTime)
+        .append("cumulativeQuoteQty", cumulativeQuoteQty)
+        .append("lastQuoteQty", lastQuoteQty)
+        .append("quoteOrderQty", quoteOrderQty)
         .toString();
   }
 }

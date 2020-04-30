@@ -11,7 +11,7 @@ import java.io.Closeable;
 import java.util.List;
 
 /**
- * Binance API data streaming façade, supporting streaming of events through web sockets.
+ * Binance API data streaming facade, supporting streaming of events through web sockets.
  */
 public interface BinanceApiWebSocketClient extends Closeable {
 

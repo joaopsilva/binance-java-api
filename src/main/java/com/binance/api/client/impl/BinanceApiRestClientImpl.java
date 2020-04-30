@@ -1,31 +1,14 @@
 package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiRestClient;
+import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
-import com.binance.api.client.domain.account.Account;
-import com.binance.api.client.domain.account.DepositAddress;
-import com.binance.api.client.domain.account.DepositHistory;
-import com.binance.api.client.domain.account.NewOrder;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.Trade;
-import com.binance.api.client.domain.account.TradeHistoryItem;
-import com.binance.api.client.domain.account.WithdrawHistory;
-import com.binance.api.client.domain.account.WithdrawResult;
-import com.binance.api.client.domain.account.request.AllOrdersRequest;
-import com.binance.api.client.domain.account.request.CancelOrderRequest;
-import com.binance.api.client.domain.account.request.CancelOrderResponse;
-import com.binance.api.client.domain.account.request.OrderRequest;
-import com.binance.api.client.domain.account.request.OrderStatusRequest;
+import com.binance.api.client.domain.account.*;
+import com.binance.api.client.domain.account.request.*;
 import com.binance.api.client.domain.general.Asset;
 import com.binance.api.client.domain.general.ExchangeInfo;
-import com.binance.api.client.domain.market.AggTrade;
-import com.binance.api.client.domain.market.BookTicker;
-import com.binance.api.client.domain.market.Candlestick;
-import com.binance.api.client.domain.market.CandlestickInterval;
-import com.binance.api.client.domain.market.OrderBook;
-import com.binance.api.client.domain.market.TickerPrice;
-import com.binance.api.client.domain.market.TickerStatistics;
+import com.binance.api.client.domain.market.*;
+import retrofit2.Call;
 
 import java.util.List;
 
@@ -62,7 +45,7 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 
   @Override
   public List<Asset> getAllAssets() {
-    return executeSync(binanceApiService.getAllAssets(BinanceApiConstants.ASSET_INFO_API_BASE_URL + "assetWithdraw/getAllAsset.html"));
+    return executeSync(binanceApiService.getAllAssets(BinanceApiConfig.getAssetInfoApiBaseUrl() + "assetWithdraw/getAllAsset.html"));
   }
 
   // Market Data endpoints
@@ -129,9 +112,19 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 
   @Override
   public NewOrderResponse newOrder(NewOrder order) {
-    return executeSync(binanceApiService.newOrder(order.getSymbol(), order.getSide(), order.getType(),
-        order.getTimeInForce(), order.getQuantity(), order.getPrice(), order.getNewClientOrderId(), order.getStopPrice(),
-        order.getIcebergQty(), order.getNewOrderRespType(), order.getRecvWindow(), order.getTimestamp()));
+    final Call<NewOrderResponse> call;
+    if (order.getQuoteOrderQty() == null) {
+      call = binanceApiService.newOrder(order.getSymbol(), order.getSide(), order.getType(),
+          order.getTimeInForce(), order.getQuantity(), order.getPrice(),
+          order.getNewClientOrderId(), order.getStopPrice(), order.getIcebergQty(), order.getNewOrderRespType(),
+          order.getRecvWindow(), order.getTimestamp());
+    } else {
+      call = binanceApiService.newOrderQuoteQty(order.getSymbol(), order.getSide(), order.getType(),
+          order.getTimeInForce(), order.getQuoteOrderQty(), order.getPrice(),
+          order.getNewClientOrderId(), order.getStopPrice(), order.getIcebergQty(), order.getNewOrderRespType(),
+          order.getRecvWindow(), order.getTimestamp());
+    }
+    return executeSync(call);
   }
 
   @Override

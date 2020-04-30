@@ -6,6 +6,7 @@ import com.binance.api.client.domain.OrderStatus;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -78,11 +79,27 @@ public class Order {
    * Order timestamp.
    */
   private long time;
-  
+
   /**
-  * Used to calculate the average price 
-  */
+   * Used to calculate the average price
+   */
   private String cummulativeQuoteQty;
+
+  /**
+   * Update timestamp.
+   */
+  private long updateTime;
+
+  /**
+   * Is working.
+   */
+  @JsonProperty("isWorking")
+  private boolean working;
+
+  /**
+   * Original quote order quantity.
+   */
+  private String origQuoteOrderQty;
 
   public String getSymbol() {
     return symbol;
@@ -187,13 +204,37 @@ public class Order {
   public void setTime(long time) {
     this.time = time;
   }
-  
+
   public String getCummulativeQuoteQty() {
     return cummulativeQuoteQty;
   }
 
   public void setCummulativeQuoteQty(String cummulativeQuoteQty) {
-     this.cummulativeQuoteQty = cummulativeQuoteQty;
+    this.cummulativeQuoteQty = cummulativeQuoteQty;
+  }
+
+  public long getUpdateTime() {
+    return updateTime;
+  }
+
+  public void setUpdateTime(long updateTime) {
+    this.updateTime = updateTime;
+  }
+
+  public boolean isWorking() {
+    return working;
+  }
+
+  public void setWorking(boolean working) {
+    this.working = working;
+  }
+
+  public String getOrigQuoteOrderQty() {
+    return origQuoteOrderQty;
+  }
+
+  public void setOrigQuoteOrderQty(String origQuoteOrderQty) {
+    this.origQuoteOrderQty = origQuoteOrderQty;
   }
 
   @Override
@@ -213,6 +254,9 @@ public class Order {
         .append("icebergQty", icebergQty)
         .append("time", time)
         .append("cummulativeQuoteQty", cummulativeQuoteQty)
+        .append("updateTime", updateTime)
+        .append("isWorking", working)
+        .append("origQuoteOrderQty", origQuoteOrderQty)
         .toString();
   }
 }
