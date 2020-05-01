@@ -86,6 +86,21 @@ public interface BinanceApiMarginRestClient {
     MarginTransaction borrow(String asset, String amount);
 
     /**
+     * Query loan record
+     * @param asset asset to query
+     * @return loan records
+     */
+    RepayQueryResult queryRepay(String asset, long startTime);
+
+    /**
+     * Query loan record
+     * @param asset asset to query
+     * @param txId the tranId in POST /sapi/v1/margin/repay
+     * @return loan records
+     */
+    RepayQueryResult queryRepay(String asset, String txId);
+
+    /**
      * Repay loan for margin account
      * @param asset asset to repay
      * @param amount amount to repay
@@ -100,4 +115,6 @@ public interface BinanceApiMarginRestClient {
      * @return loan records
      */
     LoanQueryResult queryLoan(String asset, String txId);
+
+
 }
