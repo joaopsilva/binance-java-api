@@ -88,9 +88,16 @@ public interface BinanceApiMarginRestClient {
     /**
      * Query loan record
      * @param asset asset to query
-     * @return loan records
+     * @return repay records
      */
     RepayQueryResult queryRepay(String asset, long startTime);
+
+    /**
+     * Query max borrowable
+     * @param asset asset to query
+     * @return max borrowable
+     */
+    MaxBorrowableQueryResult queryMaxBorrowable(String asset);
 
     /**
      * Query loan record
