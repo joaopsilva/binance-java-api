@@ -1,6 +1,6 @@
 package com.binance.api.client.domain.account;
 
-import com.binance.api.client.domain.SwapOperationType;
+import com.binance.api.client.domain.LiquidityOperationRecordStatus;
 
 public class LiquidityOperationRecord {
 
@@ -10,7 +10,7 @@ public class LiquidityOperationRecord {
     private String operation;
     private String shareAmount;
     private String poolName;
-    private SwapOperationType status;
+    private LiquidityOperationRecordStatus status;
 
     public String getPoolId() {
         return poolId;
@@ -52,11 +52,11 @@ public class LiquidityOperationRecord {
         this.poolName = poolName;
     }
 
-    public SwapOperationType getStatus() {
+    public LiquidityOperationRecordStatus getStatus() {
         return status;
     }
 
-    public void setStatus(SwapOperationType status) {
+    public void setStatus(LiquidityOperationRecordStatus status) {
         this.status = status;
     }
 
