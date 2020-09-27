@@ -85,4 +85,11 @@ public class BinanceApiClientFactory {
   public BinanceApiWebSocketClient newWebSocketClient() {
     return new BinanceApiWebSocketClientImpl(getSharedClient());
   }
+
+  /**
+   * Creates a new synchronous/blocking Swap REST client.
+   */
+  public BinanceApiSwapRestClient newSwapRestClient() {
+    return new BinanceApiSwapRestClientImpl(apiKey, secret);
+  }
 }
