@@ -1,10 +1,6 @@
 package com.binance.api.client;
 
-import com.binance.api.client.domain.event.AggTradeEvent;
-import com.binance.api.client.domain.event.AllMarketTickersEvent;
-import com.binance.api.client.domain.event.CandlestickEvent;
-import com.binance.api.client.domain.event.DepthEvent;
-import com.binance.api.client.domain.event.UserDataUpdateEvent;
+import com.binance.api.client.domain.event.*;
 import com.binance.api.client.domain.market.CandlestickInterval;
 
 import java.io.Closeable;
@@ -59,6 +55,15 @@ public interface BinanceApiWebSocketClient extends Closeable {
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
     Closeable onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback);
+
+    /**
+     * Open a new web socket to receive {@link BookTickerEvent bookTickerEvents} on a callback.
+     *
+     * @param symbols   market (one or coma-separated) symbol(s) to subscribe to
+     * @param callback  the callback to call on new events
+     * @return a {@link Closeable} that allows the underlying web socket to be closed.
+     */
+    Closeable onBookTickerEvent(String symbols, BinanceApiCallback<BookTickerEvent> callback);
 
     /**
      * @deprecated This method is no longer functional. Please use the returned {@link Closeable} from any of the other methods to close the web socket.
