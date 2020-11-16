@@ -41,7 +41,7 @@ public interface BinanceApiAsyncMarginRestClient {
    * @param order the new order to submit.
    * @return a response containing details about the newly placed order.
    */
-  void newOrder(NewOrder order, BinanceApiCallback<NewOrderResponse> callback);
+  void newOrder(MarginNewOrder order, BinanceApiCallback<MarginNewOrderResponse> callback);
 
   /**
    * Cancel an active margin order (async).
