@@ -1,10 +1,9 @@
 package com.binance.api.client.domain.event;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * BookTickerEvent event for a symbol. Pushes any update to the best bid or
