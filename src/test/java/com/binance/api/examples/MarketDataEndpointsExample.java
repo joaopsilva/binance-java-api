@@ -1,5 +1,7 @@
 package com.binance.api.examples;
 
+import java.util.List;
+
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.market.AggTrade;
@@ -11,8 +13,6 @@ import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
 import com.binance.api.client.exception.BinanceApiException;
 
-import java.util.List;
-
 /**
  * Examples on how to get market data information such as the latest price of a symbol, etc.
  */
@@ -23,7 +23,7 @@ public class MarketDataEndpointsExample {
     BinanceApiRestClient client = factory.newRestClient();
 
     // Getting depth of a symbol
-    OrderBook orderBook = client.getOrderBook("NEOETH", 10);
+    OrderBook orderBook = client.getOrderBook("NEOETH", Integer.valueOf(10));
     System.out.println(orderBook.getAsks());
 
     // Getting latest price of a symbol
@@ -48,7 +48,7 @@ public class MarketDataEndpointsExample {
 
     // Exception handling
     try {
-      client.getOrderBook("UNKNOWN", 10);
+      client.getOrderBook("UNKNOWN", Integer.valueOf(10));
     } catch (BinanceApiException e) {
       System.out.println(e.getError().getCode()); // -1121
       System.out.println(e.getError().getMsg());  // Invalid symbol

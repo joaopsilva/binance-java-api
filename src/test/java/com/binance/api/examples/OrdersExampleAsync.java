@@ -1,5 +1,8 @@
 package com.binance.api.examples;
 
+import static com.binance.api.client.domain.account.NewOrder.limitBuy;
+import static com.binance.api.client.domain.account.NewOrder.marketBuy;
+
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.domain.TimeInForce;
@@ -7,9 +10,6 @@ import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
-
-import static com.binance.api.client.domain.account.NewOrder.limitBuy;
-import static com.binance.api.client.domain.account.NewOrder.marketBuy;
 
 /**
  * Examples on how to place orders, cancel them, and query account information.
@@ -24,14 +24,14 @@ public class OrdersExampleAsync {
     client.getOpenOrders(new OrderRequest("LINKETH"), response -> System.out.println(response));
 
     // Get status of a particular order
-    client.getOrderStatus(new OrderStatusRequest("LINKETH", 745262L),
+    client.getOrderStatus(new OrderStatusRequest("LINKETH", Long.valueOf(745262L)),
         response -> System.out.println(response));
 
     // Getting list of all orders with a limit of 10
-    client.getAllOrders(new AllOrdersRequest("LINKETH").limit(10), response -> System.out.println(response));
+    client.getAllOrders(new AllOrdersRequest("LINKETH").limit(Integer.valueOf(10)), response -> System.out.println(response));
 
     // Canceling an order
-    client.cancelOrder(new CancelOrderRequest("LINKETH", 756703L),
+    client.cancelOrder(new CancelOrderRequest("LINKETH", Long.valueOf(756703L)),
         response -> System.out.println(response));
 
     // Placing a test LIMIT order

@@ -1,5 +1,7 @@
 package com.binance.api.examples;
 
+import java.util.List;
+
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.domain.market.AggTrade;
@@ -9,8 +11,6 @@ import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
 import com.binance.api.client.exception.BinanceApiException;
-
-import java.util.List;
 
 /**
  * Examples on how to get market data information such as the latest price of a symbol, etc., in an async way.
@@ -22,7 +22,7 @@ public class MarketDataEndpointsExampleAsync {
     BinanceApiAsyncRestClient client = factory.newAsyncRestClient();
 
     // Getting depth of a symbol (async)
-    client.getOrderBook("NEOETH", 10, (OrderBook response) -> {
+    client.getOrderBook("NEOETH", Integer.valueOf(10), (OrderBook response) -> {
       System.out.println(response.getBids());
     });
 
@@ -48,7 +48,7 @@ public class MarketDataEndpointsExampleAsync {
 
     // Exception handling
     try {
-      client.getOrderBook("UNKNOWN", 10, response -> System.out.println(response));
+      client.getOrderBook("UNKNOWN", Integer.valueOf(10), response -> System.out.println(response));
     } catch (BinanceApiException e) {
       System.out.println(e.getError().getCode()); // -1121
       System.out.println(e.getError().getMsg());  // Invalid symbol

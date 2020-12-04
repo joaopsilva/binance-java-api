@@ -1,11 +1,11 @@
 package com.binance.api.examples;
 
+import java.util.List;
+
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.account.Account;
 import com.binance.api.client.domain.account.Trade;
-
-import java.util.List;
 
 /**
  * Examples on how to get account information.
@@ -17,7 +17,7 @@ public class AccountEndpointsExample {
     BinanceApiRestClient client = factory.newRestClient();
 
     // Get account balances
-    Account account = client.getAccount(60_000L, System.currentTimeMillis());
+    Account account = client.getAccount(Long.valueOf(60_000L), Long.valueOf(System.currentTimeMillis()));
     System.out.println(account.getBalances());
     System.out.println(account.getAssetBalance("ETH"));
 

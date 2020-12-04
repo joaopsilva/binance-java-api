@@ -1,13 +1,13 @@
 package com.binance.api.examples;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.market.AggTrade;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Illustrates how to use the aggTrades event stream to create a local cache of trades for a symbol.
@@ -35,7 +35,7 @@ public class AggTradesCacheExample {
 
     this.aggTradesCache = new HashMap<>();
     for (AggTrade aggTrade : aggTrades) {
-      aggTradesCache.put(aggTrade.getAggregatedTradeId(), aggTrade);
+      aggTradesCache.put(Long.valueOf(aggTrade.getAggregatedTradeId()), aggTrade);
     }
   }
 
@@ -47,13 +47,13 @@ public class AggTradesCacheExample {
     BinanceApiWebSocketClient client = factory.newWebSocketClient();
 
     client.onAggTradeEvent(symbol.toLowerCase(), response -> {
-      Long aggregatedTradeId = response.getAggregatedTradeId();
+      Long aggregatedTradeId = Long.valueOf(response.getAggregatedTradeId());
       AggTrade updateAggTrade = aggTradesCache.get(aggregatedTradeId);
       if (updateAggTrade == null) {
         // new agg trade
         updateAggTrade = new AggTrade();
       }
-      updateAggTrade.setAggregatedTradeId(aggregatedTradeId);
+      updateAggTrade.setAggregatedTradeId(aggregatedTradeId.longValue());
       updateAggTrade.setPrice(response.getPrice());
       updateAggTrade.setQuantity(response.getQuantity());
       updateAggTrade.setFirstBreakdownTradeId(response.getFirstBreakdownTradeId());

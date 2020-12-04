@@ -1,13 +1,5 @@
 package com.binance.api.examples;
 
-import com.binance.api.client.BinanceApiCallback;
-import com.binance.api.client.BinanceApiClientFactory;
-import com.binance.api.client.BinanceApiRestClient;
-import com.binance.api.client.BinanceApiWebSocketClient;
-import com.binance.api.client.domain.event.DepthEvent;
-import com.binance.api.client.domain.market.OrderBook;
-import com.binance.api.client.domain.market.OrderBookEntry;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,6 +12,14 @@ import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+
+import com.binance.api.client.BinanceApiCallback;
+import com.binance.api.client.BinanceApiClientFactory;
+import com.binance.api.client.BinanceApiRestClient;
+import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.domain.event.DepthEvent;
+import com.binance.api.client.domain.market.OrderBook;
+import com.binance.api.client.domain.market.OrderBookEntry;
 
 /**
  * Illustrates how to use the depth event stream to create a local cache of bids/asks for a symbol.
@@ -92,7 +92,7 @@ public class DepthCacheExample {
    * 2. Initializes the depth cache by getting a snapshot from the REST API.
    */
   private void initializeDepthCache() {
-    OrderBook orderBook = restClient.getOrderBook(symbol.toUpperCase(), 10);
+    OrderBook orderBook = restClient.getOrderBook(symbol.toUpperCase(), Integer.valueOf(10));
 
     this.lastUpdateId = orderBook.getLastUpdateId();
 

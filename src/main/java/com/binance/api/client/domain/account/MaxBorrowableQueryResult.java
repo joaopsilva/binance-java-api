@@ -2,8 +2,6 @@ package com.binance.api.client.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
-
 /**
  * Max Borrow Query Result
  *

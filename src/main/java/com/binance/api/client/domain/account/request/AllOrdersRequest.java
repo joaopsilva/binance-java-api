@@ -1,14 +1,15 @@
 package com.binance.api.client.domain.account.request;
 
-import com.binance.api.client.constant.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.binance.api.client.constant.BinanceApiConstants;
 
 /**
  * A specialized order request with additional filters.
  */
 public class AllOrdersRequest extends OrderRequest {
 
-  private static final Integer DEFAULT_LIMIT = 500;
+  private static final Integer DEFAULT_LIMIT = Integer.valueOf(500);
 
   private Long orderId;
 

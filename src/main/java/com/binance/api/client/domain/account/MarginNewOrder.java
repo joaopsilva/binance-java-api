@@ -1,11 +1,12 @@
 package com.binance.api.client.domain.account;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * A trade order to enter or exit a position.
@@ -94,7 +95,7 @@ public class MarginNewOrder {
         this.quantity = quantity;
         this.newOrderRespType = NewOrderResponseType.RESULT;
         this.timestamp = System.currentTimeMillis();
-        this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
+        this.recvWindow = Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW);
     }
 
     /**

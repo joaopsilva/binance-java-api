@@ -17,7 +17,7 @@ public class TotalAccountBalanceExample {
         BinanceApiRestClient client = factory.newRestClient();
 
         // Get account balances
-        Account account = client.getAccount(60_000L, System.currentTimeMillis());
+        Account account = client.getAccount(Long.valueOf(60_000L), Long.valueOf(System.currentTimeMillis()));
 
         // Get total account balance in BTC (spot only)
         TotalAccountBalanceExample accountBalance = new TotalAccountBalanceExample();

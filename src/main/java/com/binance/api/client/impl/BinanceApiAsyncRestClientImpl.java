@@ -1,5 +1,9 @@
 package com.binance.api.client.impl;
 
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
+
+import java.util.List;
+
 import com.binance.api.client.BinanceApiAsyncRestClient;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.config.BinanceApiConfig;
@@ -30,10 +34,6 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
-
-import java.util.List;
-
-import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
 
 /**
  * Implementation of Binance's REST API using Retrofit with asynchronous/non-blocking method calls.
@@ -137,12 +137,12 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
       binanceApiService.newOrder(order.getSymbol(), order.getSide(), order.getType(),
           order.getTimeInForce(), order.getQuantity(), order.getPrice(),
           order.getNewClientOrderId(), order.getStopPrice(), order.getIcebergQty(), order.getNewOrderRespType(),
-          order.getRecvWindow(), order.getTimestamp()).enqueue(new BinanceApiCallbackAdapter<>(callback));
+          order.getRecvWindow(), Long.valueOf(order.getTimestamp())).enqueue(new BinanceApiCallbackAdapter<>(callback));
     } else {
       binanceApiService.newOrderQuoteQty(order.getSymbol(), order.getSide(), order.getType(),
           order.getTimeInForce(), order.getQuoteOrderQty(), order.getPrice(),
           order.getNewClientOrderId(), order.getStopPrice(), order.getIcebergQty(), order.getNewOrderRespType(),
-          order.getRecvWindow(), order.getTimestamp()).enqueue(new BinanceApiCallbackAdapter<>(callback));
+          order.getRecvWindow(), Long.valueOf(order.getTimestamp())).enqueue(new BinanceApiCallbackAdapter<>(callback));
     }
   }
 
@@ -150,7 +150,7 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   public void newOrderTest(NewOrder order, BinanceApiCallback<Void> callback) {
     binanceApiService.newOrderTest(order.getSymbol(), order.getSide(), order.getType(),
         order.getTimeInForce(), order.getQuantity(), order.getPrice(), order.getNewClientOrderId(), order.getStopPrice(),
-        order.getIcebergQty(), order.getNewOrderRespType(), order.getRecvWindow(), order.getTimestamp()).enqueue(new BinanceApiCallbackAdapter<>(callback));
+        order.getIcebergQty(), order.getNewOrderRespType(), order.getRecvWindow(), Long.valueOf(order.getTimestamp())).enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   // Account endpoints
@@ -190,7 +190,7 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
   @Override
   public void getAccount(BinanceApiCallback<Account> callback) {
     long timestamp = System.currentTimeMillis();
-    binanceApiService.getAccount(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, timestamp).enqueue(new BinanceApiCallbackAdapter<>(callback));
+    binanceApiService.getAccount(Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(timestamp)).enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
@@ -200,35 +200,35 @@ public class BinanceApiAsyncRestClientImpl implements BinanceApiAsyncRestClient 
 
   @Override
   public void getMyTrades(String symbol, Integer limit, BinanceApiCallback<List<Trade>> callback) {
-    getMyTrades(symbol, limit, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis(), callback);
+    getMyTrades(symbol, limit, null, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()), callback);
   }
 
   @Override
   public void getMyTrades(String symbol, BinanceApiCallback<List<Trade>> callback) {
-    getMyTrades(symbol, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis(), callback);
+    getMyTrades(symbol, null, null, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()), callback);
   }
 
   @Override
   public void withdraw(String asset, String address, String amount, String name, String addressTag, BinanceApiCallback<WithdrawResult> callback) {
-    binanceApiService.withdraw(asset, address, amount, name, addressTag, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
+    binanceApiService.withdraw(asset, address, amount, name, addressTag, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()))
         .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
   public void getDepositHistory(String asset, BinanceApiCallback<DepositHistory> callback) {
-    binanceApiService.getDepositHistory(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
+    binanceApiService.getDepositHistory(asset, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()))
         .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
   public void getWithdrawHistory(String asset, BinanceApiCallback<WithdrawHistory> callback) {
-    binanceApiService.getWithdrawHistory(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
+    binanceApiService.getWithdrawHistory(asset, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()))
         .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 
   @Override
   public void getDepositAddress(String asset, BinanceApiCallback<DepositAddress> callback) {
-    binanceApiService.getDepositAddress(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis())
+    binanceApiService.getDepositAddress(asset, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis()))
         .enqueue(new BinanceApiCallbackAdapter<>(callback));
   }
 

@@ -1,5 +1,15 @@
 package com.binance.api.domain.general;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.general.FilterType;
@@ -10,15 +20,6 @@ import com.binance.api.client.domain.general.SymbolFilter;
 import com.binance.api.client.domain.general.SymbolInfo;
 import com.binance.api.client.domain.general.SymbolStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 /**
  * Test deserialization of exchange information.
@@ -77,7 +78,7 @@ public class ExchangeInfoDeserializerTest {
       ExchangeInfo exchangeInfo = mapper.readValue(json, ExchangeInfo.class);
       System.out.println(exchangeInfo);
       assertEquals(exchangeInfo.getTimezone(), "UTC");
-      assertEquals((long)exchangeInfo.getServerTime(), 1508631584636L);
+      assertEquals(exchangeInfo.getServerTime().longValue(), 1508631584636L);
 
       List<RateLimit> rateLimits = exchangeInfo.getRateLimits();
       assertEquals(rateLimits.size(), 3);
@@ -91,9 +92,9 @@ public class ExchangeInfoDeserializerTest {
       assertEquals(symbolInfo.getSymbol(), "ETHBTC");
       assertEquals(symbolInfo.getStatus(), SymbolStatus.TRADING);
       assertEquals(symbolInfo.getBaseAsset(), "ETH");
-      assertEquals((int)symbolInfo.getBaseAssetPrecision(), 8);
+      assertEquals(symbolInfo.getBaseAssetPrecision().intValue(), 8);
       assertEquals(symbolInfo.getQuoteAsset(), "BTC");
-      assertEquals((int)symbolInfo.getQuotePrecision(), 8);
+      assertEquals(symbolInfo.getQuotePrecision().intValue(), 8);
       assertEquals(symbolInfo.getOrderTypes(), Arrays.asList(OrderType.LIMIT, OrderType.MARKET));
       assertFalse(symbolInfo.isIcebergAllowed());
 
@@ -123,6 +124,6 @@ public class ExchangeInfoDeserializerTest {
   private void testRateLimit(RateLimit rateLimit, RateLimitType expectedRateLimitType, RateLimitInterval expectedInterval, int expectedLimit) {
     assertEquals(rateLimit.getRateLimitType(), expectedRateLimitType);
     assertEquals(rateLimit.getInterval(), expectedInterval);
-    assertEquals((long)rateLimit.getLimit(), expectedLimit);
+    assertEquals(rateLimit.getLimit().longValue(), expectedLimit);
   }
 }

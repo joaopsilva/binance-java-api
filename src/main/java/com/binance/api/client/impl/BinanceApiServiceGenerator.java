@@ -1,22 +1,24 @@
 package com.binance.api.client.impl;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.binance.api.client.BinanceApiError;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.exception.BinanceApiException;
 import com.binance.api.client.security.AuthenticationInterceptor;
+
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import org.apache.commons.lang3.StringUtils;
 import retrofit2.Call;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Generates a Binance API implementation based on @see {@link BinanceApiService}.
@@ -71,10 +73,9 @@ public class BinanceApiServiceGenerator {
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 return response.body();
-            } else {
-                BinanceApiError apiError = getBinanceApiError(response);
-                throw new BinanceApiException(apiError);
             }
+            BinanceApiError apiError = getBinanceApiError(response);
+            throw new BinanceApiException(apiError);
         } catch (IOException e) {
             throw new BinanceApiException(e);
         }

@@ -1,18 +1,26 @@
 package com.binance.api.client.impl;
 
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.executeSync;
+
+import java.util.List;
+
 import com.binance.api.client.BinanceApiMarginRestClient;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.TransferType;
-import com.binance.api.client.domain.account.*;
+import com.binance.api.client.domain.account.LoanQueryResult;
+import com.binance.api.client.domain.account.MarginAccount;
+import com.binance.api.client.domain.account.MarginNewOrder;
+import com.binance.api.client.domain.account.MarginNewOrderResponse;
+import com.binance.api.client.domain.account.MarginTransaction;
+import com.binance.api.client.domain.account.MaxBorrowableQueryResult;
+import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.RepayQueryResult;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
-
-import java.util.List;
-
-import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
-import static com.binance.api.client.impl.BinanceApiServiceGenerator.executeSync;
 
 /**
  * Implementation of Binance's Margin REST API using Retrofit with asynchronous/non-blocking method calls.
@@ -28,7 +36,7 @@ public class BinanceApiMarginRestClientImpl implements BinanceApiMarginRestClien
     @Override
     public MarginAccount getAccount() {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.getMarginAccount(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, timestamp));
+        return executeSync(binanceApiService.getMarginAccount(Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(timestamp)));
     }
 
     @Override
@@ -41,7 +49,7 @@ public class BinanceApiMarginRestClientImpl implements BinanceApiMarginRestClien
     public MarginNewOrderResponse newOrder(MarginNewOrder order) {
         return executeSync(binanceApiService.newMarginOrder(order.getSymbol(), order.getSide(), order.getType(),
                 order.getTimeInForce(), order.getQuantity(), order.getPrice(), order.getNewClientOrderId(), order.getStopPrice(),
-                order.getIcebergQty(), order.getNewOrderRespType(), order.getSideEffectType(), order.getRecvWindow(), order.getTimestamp()));
+            order.getIcebergQty(), order.getNewOrderRespType(), order.getSideEffectType(), order.getRecvWindow(), Long.valueOf(order.getTimestamp())));
     }
 
     @Override
@@ -60,7 +68,7 @@ public class BinanceApiMarginRestClientImpl implements BinanceApiMarginRestClien
 
     @Override
     public List<Trade> getMyTrades(String symbol) {
-        return executeSync(binanceApiService.getMyTrades(symbol, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+      return executeSync(binanceApiService.getMyTrades(symbol, null, null, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(System.currentTimeMillis())));
     }
 
     // user stream endpoints
@@ -78,42 +86,42 @@ public class BinanceApiMarginRestClientImpl implements BinanceApiMarginRestClien
     @Override
     public MarginTransaction transfer(String asset, String amount, TransferType type) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.transfer(asset, amount, type.getValue(), BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, timestamp));
+        return executeSync(binanceApiService.transfer(asset, amount, type.getValue(), Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(timestamp)));
     }
 
     @Override
     public MarginTransaction borrow(String asset, String amount) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.borrow(asset, amount, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, timestamp));
+        return executeSync(binanceApiService.borrow(asset, amount, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(timestamp)));
     }
 
     @Override
     public LoanQueryResult queryLoan(String asset, String txId) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.queryLoan(asset, txId, timestamp));
+        return executeSync(binanceApiService.queryLoan(asset, txId, Long.valueOf(timestamp)));
     }
 
     @Override
     public RepayQueryResult queryRepay(String asset, String txId) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.queryRepay(asset, txId, timestamp));
+        return executeSync(binanceApiService.queryRepay(asset, txId, Long.valueOf(timestamp)));
     }
 
     @Override
     public RepayQueryResult queryRepay(String asset, long startTime) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.queryRepay(asset, startTime, timestamp));
+        return executeSync(binanceApiService.queryRepay(asset, Long.valueOf(startTime), Long.valueOf(timestamp)));
     }
 
     @Override
     public MaxBorrowableQueryResult queryMaxBorrowable(String asset) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.queryMaxBorrowable(asset, timestamp));
+        return executeSync(binanceApiService.queryMaxBorrowable(asset, Long.valueOf(timestamp)));
     }
 
     @Override
     public MarginTransaction repay(String asset, String amount) {
         long timestamp = System.currentTimeMillis();
-        return executeSync(binanceApiService.repay(asset, amount, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, timestamp));
+        return executeSync(binanceApiService.repay(asset, amount, Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW), Long.valueOf(timestamp)));
     }
 }

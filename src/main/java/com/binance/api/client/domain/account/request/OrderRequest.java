@@ -1,8 +1,9 @@
 package com.binance.api.client.domain.account.request;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Base request parameters for order-related methods.
@@ -18,8 +19,8 @@ public class OrderRequest {
 
   public OrderRequest(String symbol) {
     this.symbol = symbol;
-    this.timestamp = System.currentTimeMillis();
-    this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
+    this.timestamp = Long.valueOf(System.currentTimeMillis());
+    this.recvWindow = Long.valueOf(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW);
   }
 
   public String getSymbol() {
