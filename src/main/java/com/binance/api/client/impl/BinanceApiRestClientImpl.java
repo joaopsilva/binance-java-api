@@ -188,8 +188,9 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
   }
 
   @Override
-  public WithdrawResult withdraw(String asset, String address, String amount, String name, String addressTag) {
-    return executeSync(binanceApiService.withdraw(asset, address, amount, name, addressTag, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+  public WithdrawResult withdraw(String asset, String address, String amount, String name, String addressTag, String withdrawOrderId, String network, Boolean transactionFeeFlag) {
+    return executeSync(binanceApiService.withdraw(asset, address, amount, name, addressTag, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+            System.currentTimeMillis(), withdrawOrderId, network, transactionFeeFlag));
   }
 
   @Override
