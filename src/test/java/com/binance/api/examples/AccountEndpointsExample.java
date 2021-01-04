@@ -35,6 +35,6 @@ public class AccountEndpointsExample {
     System.out.println(client.getDepositAddress("ETH"));
 
     // Withdraw
-    client.withdraw("ETH", "0x123", "0.1", null, null);
+    client.withdraw("ETH", "0x123", "0.1", null, null, null, null, null);
   }
 }
