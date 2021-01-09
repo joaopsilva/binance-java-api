@@ -220,6 +220,11 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	}
 
 	@Override
+	public List<SubAccountTransfer> getSubAccountTransfers() {
+		return executeSync(binanceApiService.getSubAccountTransfers(System.currentTimeMillis()));
+	}
+
+	@Override
 	public DepositAddress getDepositAddress(String asset) {
 		return executeSync(binanceApiService.getDepositAddress(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
 				System.currentTimeMillis()));
