@@ -28,7 +28,7 @@ public interface BinanceApiMarginRestClient {
      * @param order the new order to submit.
      * @return a response containing details about the newly placed order.
      */
-    NewOrderResponse newOrder(NewOrder order);
+    MarginNewOrderResponse newOrder(MarginNewOrder order);
 
     /**
      * Cancel an active margin order.

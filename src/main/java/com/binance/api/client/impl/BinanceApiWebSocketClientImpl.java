@@ -3,11 +3,9 @@ package com.binance.api.client.impl;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.config.BinanceApiConfig;
-import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.event.*;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -58,9 +56,19 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
         return createNewWebSocket(listenKey, new BinanceApiWebSocketListener<>(callback, UserDataUpdateEvent.class));
     }
 
-    public Closeable onAllMarketTickersEvent(BinanceApiCallback<List<AllMarketTickersEvent>> callback) {
+    @Override
+    public Closeable onTickerEvent(String symbols, BinanceApiCallback<TickerEvent> callback) {
+        final String channel = Arrays.stream(symbols.split(","))
+                .map(String::trim)
+                .map(s -> String.format("%s@ticker", s))
+                .collect(Collectors.joining("/"));
+        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, TickerEvent.class));
+    }
+
+    public Closeable onAllMarketTickersEvent(BinanceApiCallback<List<TickerEvent>> callback) {
         final String channel = "!ticker@arr";
-        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<List<AllMarketTickersEvent>>() {}));
+        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<List<TickerEvent>>() {
+        }));
     }
 
     @Override
@@ -72,11 +80,17 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
         return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, BookTickerEvent.class));
     }
 
+    public Closeable onAllBookTickersEvent(BinanceApiCallback<BookTickerEvent> callback) {
+        final String channel = "!bookTicker";
+        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, BookTickerEvent.class));
+    }
+
     /**
      * @deprecated This method is no longer functional. Please use the returned {@link Closeable} from any of the other methods to close the web socket.
      */
     @Override
-    public void close() { }
+    public void close() {
+    }
 
     private Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
         String streamingUrl = String.format("%s/%s", BinanceApiConfig.getStreamApiBaseUrl(), channel);
