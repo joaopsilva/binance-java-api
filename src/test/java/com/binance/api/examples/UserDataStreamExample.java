@@ -30,18 +30,22 @@ public class UserDataStreamExample {
     webSocketClient.onUserDataUpdateEvent(listenKey, response -> {
       if (response.getEventType() == UserDataUpdateEventType.ACCOUNT_UPDATE) {
         AccountUpdateEvent accountUpdateEvent = response.getAccountUpdateEvent();
-        // Print new balances of every available asset
-        System.out.println(accountUpdateEvent.getBalances());
+        if(accountUpdateEvent != null) {
+          // Print new balances of every available asset
+          System.out.println(accountUpdateEvent.getBalances());
+        }
       } else {
         OrderTradeUpdateEvent orderTradeUpdateEvent = response.getOrderTradeUpdateEvent();
-        // Print details about an order/trade
-        System.out.println(orderTradeUpdateEvent);
+        if(orderTradeUpdateEvent != null) {
+          // Print details about an order/trade
+          System.out.println(orderTradeUpdateEvent);
 
-        // Print original quantity
-        System.out.println(orderTradeUpdateEvent.getOriginalQuantity());
+          // Print original quantity
+          System.out.println(orderTradeUpdateEvent.getOriginalQuantity());
 
-        // Or price
-        System.out.println(orderTradeUpdateEvent.getPrice());
+          // Or price
+          System.out.println(orderTradeUpdateEvent.getPrice());
+        }
       }
     });
     System.out.println("Waiting for events...");
