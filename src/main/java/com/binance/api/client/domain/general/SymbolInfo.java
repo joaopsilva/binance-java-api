@@ -123,7 +123,7 @@ public class SymbolInfo {
     return isSpotTradingAllowed;
   }
 
-  public void setSpotTradingAllowed(boolean isSpotTradingAllowed) {
+  public void setIsSpotTradingAllowed(boolean isSpotTradingAllowed) {
     this.isSpotTradingAllowed = isSpotTradingAllowed;
   }
 
@@ -131,7 +131,7 @@ public class SymbolInfo {
     return isMarginTradingAllowed;
   }
 
-  public void setMarginTradingAllowed(boolean isMarginTradingAllowed) {
+  public void setIsMarginTradingAllowed(boolean isMarginTradingAllowed) {
     this.isMarginTradingAllowed = isMarginTradingAllowed;
   }
 

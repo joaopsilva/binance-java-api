@@ -30,7 +30,7 @@ public interface BinanceApiService {
     @GET("/api/v1/time")
     Call<ServerTime> getServerTime();
 
-    @GET("/api/v1/exchangeInfo")
+    @GET("/api/v3/exchangeInfo")
     Call<ExchangeInfo> getExchangeInfo();
 
     @GET
