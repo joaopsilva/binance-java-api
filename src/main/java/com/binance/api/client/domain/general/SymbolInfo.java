@@ -29,6 +29,14 @@ public class SymbolInfo {
 
   private boolean icebergAllowed;
 
+  private boolean ocoAllowed;
+
+  private boolean quoteOrderQtyMarketAllowed;
+
+  private boolean isSpotTradingAllowed;
+
+  private boolean isMarginTradingAllowed;
+
   private List<SymbolFilter> filters;
 
   public String getSymbol() {
@@ -93,6 +101,38 @@ public class SymbolInfo {
 
   public void setIcebergAllowed(boolean icebergAllowed) {
     this.icebergAllowed = icebergAllowed;
+  }
+
+  public boolean isOcoAllowed() {
+    return ocoAllowed;
+  }
+
+  public void setOcoAllowed(boolean ocoAllowed) {
+    this.ocoAllowed = ocoAllowed;
+  }
+
+  public boolean isQuoteOrderQtyMarketAllowed() {
+    return quoteOrderQtyMarketAllowed;
+  }
+
+  public void setQuoteOrderQtyMarketAllowed(boolean quoteOrderQtyMarketAllowed) {
+    this.quoteOrderQtyMarketAllowed = quoteOrderQtyMarketAllowed;
+  }
+
+  public boolean isSpotTradingAllowed() {
+    return isSpotTradingAllowed;
+  }
+
+  public void setIsSpotTradingAllowed(boolean isSpotTradingAllowed) {
+    this.isSpotTradingAllowed = isSpotTradingAllowed;
+  }
+
+  public boolean isMarginTradingAllowed() {
+    return isMarginTradingAllowed;
+  }
+
+  public void setIsMarginTradingAllowed(boolean isMarginTradingAllowed) {
+    this.isMarginTradingAllowed = isMarginTradingAllowed;
   }
 
   public List<SymbolFilter> getFilters() {
