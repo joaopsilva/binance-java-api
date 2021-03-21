@@ -71,6 +71,11 @@ public class Order {
   private String stopPrice;
 
   /**
+   * Used with stop orders.
+   */
+  private String stopLimitPrice;
+
+  /**
    * Used with iceberg orders.
    */
   private String icebergQty;
