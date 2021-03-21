@@ -194,6 +194,14 @@ public class Order {
     this.stopPrice = stopPrice;
   }
 
+  public String getStopLimitPrice() {
+    return stopLimitPrice;
+  }
+
+  public void setStopLimitPrice(String stopLimitPrice) {
+    this.stopLimitPrice = stopLimitPrice;
+  }
+
   public String getIcebergQty() {
     return icebergQty;
   }
@@ -245,23 +253,24 @@ public class Order {
   @Override
   public String toString() {
     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
-        .append("symbol", symbol)
-        .append("orderId", orderId)
-        .append("clientOrderId", clientOrderId)
-        .append("price", price)
-        .append("origQty", origQty)
-        .append("executedQty", executedQty)
-        .append("status", status)
-        .append("timeInForce", timeInForce)
-        .append("type", type)
-        .append("side", side)
-        .append("stopPrice", stopPrice)
-        .append("icebergQty", icebergQty)
-        .append("time", time)
-        .append("cummulativeQuoteQty", cummulativeQuoteQty)
-        .append("updateTime", updateTime)
-        .append("isWorking", working)
-        .append("origQuoteOrderQty", origQuoteOrderQty)
-        .toString();
+            .append("symbol", symbol)
+            .append("orderId", orderId)
+            .append("clientOrderId", clientOrderId)
+            .append("price", price)
+            .append("origQty", origQty)
+            .append("executedQty", executedQty)
+            .append("status", status)
+            .append("timeInForce", timeInForce)
+            .append("type", type)
+            .append("side", side)
+            .append("stopPrice", stopPrice)
+            .append("stopLimitPrice", stopLimitPrice)
+            .append("icebergQty", icebergQty)
+            .append("time", time)
+            .append("cummulativeQuoteQty", cummulativeQuoteQty)
+            .append("updateTime", updateTime)
+            .append("isWorking", working)
+            .append("origQuoteOrderQty", origQuoteOrderQty)
+            .toString();
   }
 }
