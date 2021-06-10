@@ -169,6 +169,33 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	}
 
 	@Override
+	public NewOCOResponse newOCO(NewOCO oco) {
+		return executeSync(binanceApiService.newOCO(oco.getSymbol(), oco.getListClientOrderId(), oco.getSide(),
+				oco.getQuantity(), oco.getLimitClientOrderId(), oco.getPrice(), oco.getLimitIcebergQty(),
+				oco.getStopClientOrderId(), oco.getStopPrice(), oco.getStopLimitPrice(), oco.getStopIcebergQty(),
+				oco.getStopLimitTimeInForce(), oco.getNewOrderRespType(), oco.getRecvWindow(), oco.getTimestamp()));
+	}
+
+	@Override
+	public CancelOrderListResponse cancelOrderList(CancelOrderListRequest cancelOrderListRequest) {
+		return executeSync(binanceApiService.cancelOrderList(cancelOrderListRequest.getSymbol(), cancelOrderListRequest.getOrderListId(),
+				cancelOrderListRequest.getListClientOrderId(), cancelOrderListRequest.getNewClientOrderId(),
+				cancelOrderListRequest.getRecvWindow(), cancelOrderListRequest.getTimestamp()));
+	}
+
+	@Override
+	public OrderList getOrderListStatus(OrderListStatusRequest orderListStatusRequest) {
+		return executeSync(binanceApiService.getOrderListStatus(orderListStatusRequest.getOrderListId(), orderListStatusRequest.getOrigClientOrderId(),
+				orderListStatusRequest.getRecvWindow(), orderListStatusRequest.getTimestamp()));
+	}
+
+	@Override
+	public List<OrderList> getAllOrderList(AllOrderListRequest allOrderListRequest) {
+		return executeSync(binanceApiService.getAllOrderList(allOrderListRequest.getFromId(), allOrderListRequest.getStartTime(),
+				allOrderListRequest.getEndTime(), allOrderListRequest.getLimit(), allOrderListRequest.getRecvWindow(), allOrderListRequest.getTimestamp()));
+	}
+
+	@Override
 	public Account getAccount(Long recvWindow, Long timestamp) {
 		return executeSync(binanceApiService.getAccount(recvWindow, timestamp));
 	}
@@ -205,6 +232,11 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	public WithdrawResult withdraw(String asset, String address, String amount, String name, String addressTag) {
 		return executeSync(binanceApiService.withdraw(asset, address, amount, name, addressTag,
 				BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+	}
+
+	@Override
+	public DustTransferResponse dustTranfer(List<String> asset) {
+		return executeSync(binanceApiService.dustTransfer(asset, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
 	}
 
 	@Override

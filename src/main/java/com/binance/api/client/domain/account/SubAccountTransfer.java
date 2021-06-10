@@ -34,6 +34,16 @@ public class SubAccountTransfer {
     private String qty;
 
     /**
+     * Type of from account
+     */
+    private String fromAccountType;
+
+    /**
+     * Type of to account
+     */
+    private String toAccountType;
+
+    /**
      * Transfer status
      */
     private String status;
@@ -69,6 +79,10 @@ public class SubAccountTransfer {
         this.qty = qty;
     }
 
+    public void setFromAccountType(String fromAccountType) { this.fromAccountType = fromAccountType; }
+
+    public void setToAccountType(String toAccountType) { this.toAccountType = toAccountType; }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -102,6 +116,10 @@ public class SubAccountTransfer {
         return this.qty;
     }
 
+    public String getFromAccountType() { return this.fromAccountType; }
+
+    public String getToAccountType() { return this.toAccountType; }
+
     public String getStatus() {
         return this.status;
     }
@@ -122,6 +140,8 @@ public class SubAccountTransfer {
                 .append("type", this.type)
                 .append("asset", this.asset)
                 .append("qty", this.qty)
+                .append("fromAccountType", this.fromAccountType)
+                .append("toAccountType", this.toAccountType)
                 .append("status", this.status)
                 .append("tranId", this.tranId)
                 .append("time", this.time)
