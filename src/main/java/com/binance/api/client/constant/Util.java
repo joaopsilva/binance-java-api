@@ -13,7 +13,7 @@ public final class Util {
     /**
      * List of fiat currencies.
      */
-    public static final List<String> FIAT_CURRENCY = Collections.unmodifiableList(Arrays.asList("USDT", "BUSD", "PAX", "TUSD", "USDC", "NGN", "RUB", "USDS, TRY"));
+    public static final List<String> FIAT_CURRENCY = Collections.unmodifiableList(Arrays.asList("USDT", "BUSD", "PAX", "TUSD", "USDC", "NGN", "RUB", "USDS", "TRY"));
 
     public static final String BTC_TICKER = "BTC";
 
