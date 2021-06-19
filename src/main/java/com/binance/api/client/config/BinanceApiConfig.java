@@ -77,6 +77,6 @@ public class BinanceApiConfig {
      * Streaming Spot Test Network base URL.
      */
     public static String getStreamTestNetBaseUrl() {
-        return String.format("wss://%s", TESTNET_DOMAIN);
+        return String.format("wss://%s/ws", TESTNET_DOMAIN);
     }
 }
