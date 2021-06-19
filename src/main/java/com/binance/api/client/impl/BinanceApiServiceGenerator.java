@@ -58,8 +58,8 @@ public class BinanceApiServiceGenerator {
         String baseUrl = null;
         if (!BinanceApiConfig.useTestnet) { baseUrl = BinanceApiConfig.getApiBaseUrl(); }
         else {
-            baseUrl = BinanceApiConfig.useTestnetStreaming ?
-                BinanceApiConfig.getStreamTestNetBaseUrl() :
+            baseUrl = /*BinanceApiConfig.useTestnetStreaming ?
+                BinanceApiConfig.getStreamTestNetBaseUrl() :*/
                 BinanceApiConfig.getTestNetBaseUrl();
         }
 
