@@ -75,9 +75,7 @@ public class UserDataUpdateEvent {
     ToStringBuilder sb = new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
         .append("eventType", eventType)
         .append("eventTime", eventTime);
-    if (eventType == UserDataUpdateEventType.ACCOUNT_UPDATE) {
-      sb.append("accountUpdateEvent", accountUpdateEvent);
-    } else if (eventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
+    if (eventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
       sb.append("accountPositionUpdateEvent", accountUpdateEvent);
     } else if (eventType == UserDataUpdateEventType.BALANCE_UPDATE) {
       sb.append("balanceUpdateEvent", balanceUpdateEvent);
@@ -88,7 +86,6 @@ public class UserDataUpdateEvent {
   }
 
   public enum UserDataUpdateEventType {
-    ACCOUNT_UPDATE("outboundAccountInfo"),
     ACCOUNT_POSITION_UPDATE("outboundAccountPosition"),
     BALANCE_UPDATE("balanceUpdate"),
     ORDER_TRADE_UPDATE("executionReport"),
@@ -105,9 +102,7 @@ public class UserDataUpdateEvent {
     }
 
     public static UserDataUpdateEventType fromEventTypeId(String eventTypeId) {
-      if (ACCOUNT_UPDATE.eventTypeId.equals(eventTypeId)) {
-        return ACCOUNT_UPDATE;
-      } else if (ORDER_TRADE_UPDATE.eventTypeId.equals(eventTypeId)) {
+      if (ORDER_TRADE_UPDATE.eventTypeId.equals(eventTypeId)) {
         return ORDER_TRADE_UPDATE;
       } else if (ACCOUNT_POSITION_UPDATE.eventTypeId.equals(eventTypeId)) {
         return ACCOUNT_POSITION_UPDATE;
