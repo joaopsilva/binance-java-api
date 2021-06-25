@@ -9,7 +9,7 @@ import com.binance.api.client.domain.account.AssetBalance;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.binance.api.client.domain.event.UserDataUpdateEvent.UserDataUpdateEventType.ACCOUNT_UPDATE;
+import static com.binance.api.client.domain.event.UserDataUpdateEvent.UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE;
 
 /**
  * Illustrates how to use the user data event stream to create a local cache for the balance of an account.
@@ -58,9 +58,9 @@ public class AccountBalanceCacheExample {
     BinanceApiWebSocketClient client = clientFactory.newWebSocketClient();
 
     client.onUserDataUpdateEvent(listenKey, response -> {
-      if (response.getEventType() == ACCOUNT_UPDATE) {
+      if (response.getEventType() == ACCOUNT_POSITION_UPDATE) {
         // Override cached asset balances
-        for (AssetBalance assetBalance : response.getAccountUpdateEvent().getBalances()) {
+        for (AssetBalance assetBalance : response.getOutboundAccountPositionUpdateEvent().getBalances()) {
           accountBalanceCache.put(assetBalance.getAsset(), assetBalance);
         }
         System.out.println(accountBalanceCache);
