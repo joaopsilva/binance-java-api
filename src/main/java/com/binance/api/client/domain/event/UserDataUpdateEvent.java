@@ -24,7 +24,7 @@ public class UserDataUpdateEvent {
 
   private long eventTime;
 
-  private AccountUpdateEvent accountUpdateEvent;
+  private AccountUpdateEvent outboundAccountPositionUpdateEvent;
 
   private BalanceUpdateEvent balanceUpdateEvent;
 
@@ -46,12 +46,20 @@ public class UserDataUpdateEvent {
     this.eventTime = eventTime;
   }
 
+  /**
+   * @Deprecated: left in for backwards compatibility. Use getOutboundAccountPositionUpdateEvent() instead, as that is what the Binance API documentation calls it.
+   */
+  @Deprecated
   public AccountUpdateEvent getAccountUpdateEvent() {
-    return accountUpdateEvent;
+    return outboundAccountPositionUpdateEvent;
   }
 
-  public void setAccountUpdateEvent(AccountUpdateEvent accountUpdateEvent) {
-    this.accountUpdateEvent = accountUpdateEvent;
+  public AccountUpdateEvent getOutboundAccountPositionUpdateEvent() {
+    return outboundAccountPositionUpdateEvent;
+  }
+
+  public void setOutboundAccountPositionUpdateEvent(AccountUpdateEvent accountUpdateEvent) {
+    this.outboundAccountPositionUpdateEvent = accountUpdateEvent;
   }
 
   public BalanceUpdateEvent getBalanceUpdateEvent() {
@@ -76,7 +84,7 @@ public class UserDataUpdateEvent {
         .append("eventType", eventType)
         .append("eventTime", eventTime);
     if (eventType == UserDataUpdateEventType.ACCOUNT_POSITION_UPDATE) {
-      sb.append("accountPositionUpdateEvent", accountUpdateEvent);
+      sb.append("outboundAccountPositionUpdateEvent", outboundAccountPositionUpdateEvent);
     } else if (eventType == UserDataUpdateEventType.BALANCE_UPDATE) {
       sb.append("balanceUpdateEvent", balanceUpdateEvent);
     } else {
@@ -86,8 +94,11 @@ public class UserDataUpdateEvent {
   }
 
   public enum UserDataUpdateEventType {
+    /** Corresponds to "outboundAccountPosition" events. */
     ACCOUNT_POSITION_UPDATE("outboundAccountPosition"),
+    /** Corresponds to "balanceUpdate" events. */
     BALANCE_UPDATE("balanceUpdate"),
+    /** Corresponds to "executionReport" events. */
     ORDER_TRADE_UPDATE("executionReport"),
     ;
 
