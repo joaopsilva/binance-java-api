@@ -19,9 +19,9 @@ public class AuthenticationInterceptor implements Interceptor {
 
     private final String apiKey;
 
-    private final String secret;
+    private final byte[] secret;
 
-    public AuthenticationInterceptor(String apiKey, String secret) {
+    public AuthenticationInterceptor(String apiKey, byte[] secret) {
         this.apiKey = apiKey;
         this.secret = secret;
     }

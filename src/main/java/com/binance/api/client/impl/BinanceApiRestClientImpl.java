@@ -24,6 +24,10 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	private final BinanceApiService binanceApiService;
 
 	public BinanceApiRestClientImpl(String apiKey, String secret) {
+		this(apiKey, secret.getBytes());
+	}
+
+	public BinanceApiRestClientImpl(String apiKey, byte[] secret) {
 		binanceApiService = createService(BinanceApiService.class, apiKey, secret);
 	}
 

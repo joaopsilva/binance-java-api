@@ -21,7 +21,7 @@ public class BinanceApiMarginRestClientImpl implements BinanceApiMarginRestClien
 
     private final BinanceApiService binanceApiService;
 
-    public BinanceApiMarginRestClientImpl(String apiKey, String secret) {
+    public BinanceApiMarginRestClientImpl(String apiKey, byte[] secret) {
         binanceApiService = createService(BinanceApiService.class, apiKey, secret);
     }
 

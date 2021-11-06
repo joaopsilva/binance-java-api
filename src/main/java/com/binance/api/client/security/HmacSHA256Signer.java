@@ -16,10 +16,10 @@ public class HmacSHA256Signer {
    * @param secret secret key
    * @return a signed message
    */
-  public static String sign(String message, String secret) {
+  public static String sign(String message, byte[] secret) {
     try {
       Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-      SecretKeySpec secretKeySpec = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+      SecretKeySpec secretKeySpec = new SecretKeySpec(secret, "HmacSHA256");
       sha256_HMAC.init(secretKeySpec);
       return new String(Hex.encodeHex(sha256_HMAC.doFinal(message.getBytes())));
     } catch (Exception e) {

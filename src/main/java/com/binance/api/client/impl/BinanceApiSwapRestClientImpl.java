@@ -17,7 +17,7 @@ public class BinanceApiSwapRestClientImpl implements BinanceApiSwapRestClient {
 
     private final BinanceApiService binanceApiService;
 
-    public BinanceApiSwapRestClientImpl(String apiKey, String secret) {
+    public BinanceApiSwapRestClientImpl(String apiKey, byte[] secret) {
         binanceApiService = createService(BinanceApiService.class, apiKey, secret);
     }
 
